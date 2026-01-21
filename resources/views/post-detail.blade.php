@@ -8,7 +8,7 @@
 </head>
 <body class="bg-gray-50">
 
-      <nav class="bg-blue-900 text-white shadow-lg sticky top-0 z-50">
+    <nav class="bg-blue-900 text-white shadow-lg sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center space-x-3">
                 <img src="{{asset('image/kabsmg.png')}}" class="h-12">

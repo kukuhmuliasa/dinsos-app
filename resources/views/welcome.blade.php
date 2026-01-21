@@ -9,15 +9,15 @@
 <body class="bg-gray-50 text-gray-900">
 
     <nav class="fixed top-0 left-0 w-full text-white z-50 bg-gradient-to-b from-blue-900/90 to-transparent transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center space-x-3">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
+            <div class="flex space-x-1">
                 <img src="{{asset('image/kabsmg.png')}}" class="h-12">
                 <div>
                     <h1 class="font-bold text-lg leading-tight uppercase text-white">Dinas Sosial</h1>
                     <p class="text-xs text-blue-100">Kabupaten Semarang</p>
                 </div>
             </div>
-            <ul class="hidden md:flex space-x-6 font-medium">
+            <ul class="hidden md:flex ml-auto mr-16 space-x-6 font-medium">
                 <li><a href="/" class="hover:text-yellow-400">Beranda</a></li>
                 <li><a href="{{ route('services.index') }}" class="hover:text-yellow-400">Layanan</a></li>
                 <li><a href="{{ route('posts.index') }}" class="hover:text-yellow-400">Berita</a></li>
@@ -28,7 +28,7 @@
 
     <header 
         class="relative min-h-[70vh] md:min-h-[85vh] flex items-center justify-center text-center text-white bg-cover bg-center"
-        style="background-image: linear-gradient(rgba(30, 58, 138, 0.75), rgba(30, 58, 138, 0.75)), url('{{ asset('image/dinsos.webp') }}');">
+        style="background-image: linear-gradient(rgba(30, 58, 138, 0.55), rgba(30, 58, 138, 0.55)), url('{{ asset('image/dinsos.webp') }}');">
         <div class="px-4">
             <h2 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
                 Melayani dengan Sepenuh Hati
@@ -101,7 +101,7 @@
                     <div class="p-5">
                         <span class="text-xs font-bold text-blue-600 uppercase">{{ $post->created_at->format('d M Y') }}</span>
                         <h4 class="font-bold text-xl mt-2 mb-3 leading-tight">{{ $post->title }}</h4>
-                        <a href="{{ route('post.show', $post->slug) }}" class="text-blue-700 font-bold hover:text-blue-900">Baca Selengkapnya</a>
+                        <a href="{{ route('post.show', $post->slug) }}" class="text-blue-700 hover:text-blue-900">Baca Selengkapnya</a>
                     </div>
                 </div>
                 @endforeach
