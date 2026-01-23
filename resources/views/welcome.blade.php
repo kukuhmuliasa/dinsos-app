@@ -1,161 +1,413 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Dinas Sosial Kabupaten Semarang</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
-<body class="bg-gray-50 text-gray-900">
 
-    <nav class="fixed top-0 left-0 w-full text-white z-50 bg-gradient-to-b from-blue-900/90 to-transparent transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center">
-            <div class="flex space-x-1">
-                <img src="{{asset('image/kabsmg.png')}}" class="h-12">
-                <div>
-                    <h1 class="font-bold text-lg leading-tight uppercase text-white">Dinas Sosial</h1>
-                    <p class="text-xs text-blue-100">Kabupaten Semarang</p>
+    <style>
+        /* --- 1. CSS Animasi Ombak --- */
+        .waves { position: absolute; bottom: 0; left: 0; width: 100%; height: 120px; min-height: 100px; max-height: 160px; }
+        .parallax > use { animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite; }
+        .parallax > use:nth-child(1) { animation-delay: -2s; animation-duration: 7s; fill: rgba(255, 255, 255, 0.7); }
+        .parallax > use:nth-child(2) { animation-delay: -3s; animation-duration: 10s; fill: rgba(255, 255, 255, 0.5); }
+        .parallax > use:nth-child(3) { animation-delay: -4s; animation-duration: 13s; fill: rgba(255, 255, 255, 0.3); }
+        /* Warna ombak terakhir disamakan dengan background section sambutan (slate-50) */
+        .parallax > use:nth-child(4) { animation-delay: -5s; animation-duration: 20s; fill: #f8fafc; } 
+        
+        @keyframes move-forever { 0% { transform: translate3d(-90px,0,0); } 100% { transform: translate3d(85px,0,0); } }
+        @media (max-width: 768px) { .waves { height: 80px; min-height: 80px; } }
+
+        /* --- 2. Animasi Fade Up --- */
+        .animate-fade-up { opacity: 0; animation: fadeUp 0.8s ease-out forwards; animation-delay: var(--delay, 0s); }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- 3. Dekorasi Blob (Untuk Foto Kepala Dinas) --- */
+        .blob-decoration {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1.2);
+            width: 100%; height: 100%;
+            background: linear-gradient(to right, #BFDBFE, #DBEafe);
+            border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+            z-index: -1; opacity: 0.7; filter: blur(20px);
+        }
+
+        /* --- 4. Scrollbar Custom untuk Dropdown Search --- */
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans selection:bg-yellow-300 selection:text-blue-900">
+
+    <nav id="main-nav" class="fixed top-0 left-0 w-full text-white z-50 transition-all duration-500 ease-in-out">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-3 group cursor-pointer">
+                <img src="{{asset('image/kabsmg.png')}}" class="h-10 md:h-12 drop-shadow-md transition-transform group-hover:scale-105">
+                <div class="drop-shadow-sm">
+                    <h1 class="font-bold text-base md:text-lg leading-tight uppercase tracking-wide">Dinas Sosial</h1>
+                    <p class="text-[10px] md:text-xs text-blue-100 font-medium tracking-wider">Kabupaten Semarang</p>
                 </div>
             </div>
-            <ul class="hidden md:flex ml-auto mr-16 space-x-6 font-medium">
-                <li><a href="/" class="hover:text-yellow-400">Beranda</a></li>
-                <li><a href="{{ route('services.index') }}" class="hover:text-yellow-400">Layanan</a></li>
-                <li><a href="{{ route('posts.index') }}" class="hover:text-yellow-400">Berita</a></li>
-                <li><a href="{{ route('documents.index') }}" class="hover:text-yellow-400">Dokumen</a></li>
+            <ul class="hidden md:flex space-x-8 font-semibold text-sm tracking-wider uppercase">
+                <li><a href="/" class="py-2 hover:text-yellow-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:bg-yellow-400 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300">Beranda</a></li>
+                <li><a href="{{ route('services.index') }}" class="py-2 hover:text-yellow-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:bg-yellow-400 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300">Layanan</a></li>
+                <li><a href="{{ route('posts.index') }}" class="py-2 hover:text-yellow-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:bg-yellow-400 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300">Berita</a></li>
+                <li><a href="{{ route('documents.index') }}" class="py-2 hover:text-yellow-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:bg-yellow-400 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300">Dokumen</a></li>
             </ul>
+             <button class="md:hidden text-white focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
         </div>
     </nav>
 
-    <header 
-        class="relative min-h-[70vh] md:min-h-[85vh] flex items-center justify-center text-center text-white bg-cover bg-center"
-        style="background-image: linear-gradient(rgba(30, 58, 138, 0.55), rgba(30, 58, 138, 0.55)), url('{{ asset('image/dinsos.webp') }}');">
-        <div class="px-4">
-            <h2 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-                Melayani dengan Sepenuh Hati
+    <header class="relative min-h-screen flex flex-col justify-center items-center text-center text-white bg-cover bg-center overflow-hidden"
+            style="background-image: linear-gradient(rgba(10, 30, 70, 0.7), rgba(30, 58, 138, 0.8)), url('{{ asset('image/gedung dinsos.jpeg') }}'); background-attachment: fixed;">
+        
+        <div class="px-4 relative z-30 w-full max-w-5xl mt-16 md:mt-0">
+            
+            <div class="animate-fade-up flex justify-center mb-6" style="--delay: 0.1s">
+                <span class="bg-yellow-500/90 backdrop-blur-sm text-blue-950 text-xs md:text-sm font-extrabold px-6 py-2 rounded-full shadow-lg border border-yellow-300 tracking-wide uppercase">
+                    Portal Informasi Resmi
+                </span>
+            </div>
+            
+            <h2 class="animate-fade-up text-4xl md:text-6xl font-extrabold mb-6 leading-tight tracking-tight drop-shadow-2xl" style="--delay: 0.3s">
+                Melayani dengan <br class="md:hidden"> 
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400 filter drop-shadow-md">
+                    Sepenuh Hati
+                </span>
             </h2>
-            <p class="text-lg md:text-2xl text-blue-100 max-w-3xl mx-auto">
-                Portal Informasi Resmi Dinas Sosial Kabupaten Semarang
+            
+            <p class="animate-fade-up text-base md:text-xl text-blue-50 max-w-3xl mx-auto font-light leading-relaxed drop-shadow-md mb-12 opacity-90" style="--delay: 0.5s">
+                Akses mudah informasi layanan sosial, berita terkini, dan dokumen publik <br class="hidden md:block"> untuk kesejahteraan masyarakat Kabupaten Semarang.
             </p>
+
+            <div class="animate-fade-up w-full max-w-3xl mx-auto relative group z-50 mb-10 md:mb-0" style="--delay: 0.7s">
+                
+                <form action="{{ route('search.results') }}" method="GET" autocomplete="off" class="relative z-50">
+                    <div class="relative flex items-center bg-white rounded-full shadow-[0_15px_40px_rgba(0,0,0,0.4)] p-2 ring-4 ring-white/20 transition-all duration-300 focus-within:ring-yellow-400 focus-within:scale-[1.02]">
+                        
+                        <div class="pl-4 pr-3 text-blue-900/60">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                            </svg>
+                        </div>
+                        
+                        <input type="text" 
+                               id="search-input"
+                               name="q" 
+                               placeholder="Cari layanan (misal: PKH, DTKS, Lansia)..." 
+                               class="w-full bg-transparent text-gray-800 font-semibold placeholder-gray-400 px-2 py-3 md:py-4 outline-none border-none focus:ring-0 text-base md:text-lg"
+                               autocomplete="off">
+                        
+                        <button type="submit" class="bg-blue-900 text-white px-6 md:px-10 py-3 md:py-4 rounded-full font-bold shadow-lg hover:bg-yellow-500 hover:text-blue-900 transition-all duration-300 flex items-center gap-2">
+                            <span>Cari</span>
+                        </button>
+                    </div>
+                </form>
+
+                <div id="search-results" 
+                     class="absolute top-full left-4 right-4 mt-3 bg-white rounded-2xl shadow-2xl overflow-hidden max-h-80 overflow-y-auto hidden custom-scrollbar text-left border border-gray-100 divide-y divide-gray-100 z-50 transform transition-all duration-200 origin-top">
+                    </div>
+                
+                <div class="mt-5 flex flex-wrap justify-center gap-3 text-xs md:text-sm font-medium text-blue-100">
+                    <span class="opacity-70">Paling banyak dicari:</span>
+                    <button type="button" onclick="setSearch('PKH')" class="bg-white/10 hover:bg-yellow-400 hover:text-blue-900 px-3 py-1 rounded-full transition border border-white/20">Bantuan PKH</button>
+                    <button type="button" onclick="setSearch('DTKS')" class="bg-white/10 hover:bg-yellow-400 hover:text-blue-900 px-3 py-1 rounded-full transition border border-white/20">Cek DTKS</button>
+                    <button type="button" onclick="setSearch('BPJS')" class="bg-white/10 hover:bg-yellow-400 hover:text-blue-900 px-3 py-1 rounded-full transition border border-white/20">BPJS PBI</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 w-full z-10 leading-none pointer-events-none">
+            <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+            viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                <defs>
+                    <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                </defs>
+                <g class="parallax">
+                    <use xlink:href="#gentle-wave" x="48" y="0" />
+                    <use xlink:href="#gentle-wave" x="48" y="3" />
+                    <use xlink:href="#gentle-wave" x="48" y="5" />
+                    <use xlink:href="#gentle-wave" x="48" y="7" />
+                </g>
+            </svg>
         </div>
     </header>
 
     <script>
+        // 1. Script Navbar Glassmorphism
         window.addEventListener('scroll', function() {
-            const nav = document.querySelector('nav');
+            const nav = document.getElementById('main-nav');
             if (window.scrollY > 50) {
-                nav.classList.add('bg-blue-900', 'shadow-xl');
-                nav.classList.remove('bg-gradient-to-b', 'from-blue-900/90');
+                nav.classList.add('bg-blue-950/95', 'backdrop-blur-md', 'shadow-xl', 'py-3');
+                nav.classList.remove('py-4');
             } else {
-                nav.classList.remove('bg-blue-900', 'shadow-xl');
-                nav.classList.add('bg-gradient-to-b', 'from-blue-900/90');
+                nav.classList.remove('bg-blue-950/95', 'backdrop-blur-md', 'shadow-xl', 'py-3');
+                nav.classList.add('py-4');
+            }
+        });
+
+        // 2. Logic Search Autocomplete (Forecast)
+        const searchInput = document.getElementById('search-input');
+        const searchResults = document.getElementById('search-results');
+        let timeout = null;
+
+        // Fungsi helper untuk tombol quick search
+        function setSearch(keyword) {
+            searchInput.value = keyword;
+            fetchSuggestions(keyword);
+        }
+
+        searchInput.addEventListener('input', function() {
+            clearTimeout(timeout);
+            const query = this.value;
+
+            if (query.length < 1) {
+                searchResults.classList.add('hidden');
+                searchResults.innerHTML = '';
+                return;
+            }
+
+            // Debounce 300ms
+            timeout = setTimeout(() => {
+                fetchSuggestions(query);
+            }, 300);
+        });
+
+        async function fetchSuggestions(query) {
+            try {
+                // Pastikan route '/search/suggestions' sudah dibuat di Controller & Routes
+                const response = await fetch(`/search/suggestions?q=${query}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const data = await response.json();
+                renderResults(data);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        }
+
+        function renderResults(data) {
+            let html = '';
+
+            if (data.length > 0) {
+                data.forEach(item => {
+                    let icon = item.type === 'Layanan' 
+                        ? '<span class="bg-blue-100 text-blue-600 p-2 rounded-lg"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg></span>'
+                        : '<span class="bg-green-100 text-green-600 p-2 rounded-lg"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg></span>';
+                    
+                    html += `
+                        <a href="${item.url}" class="flex items-center px-6 py-4 hover:bg-slate-50 transition-colors cursor-pointer group border-b border-gray-50 last:border-0">
+                            <div class="mr-4 flex-shrink-0">
+                                ${icon}
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800 group-hover:text-blue-700 transition-colors text-sm md:text-base">${item.title}</h4>
+                                <span class="text-xs text-gray-400 uppercase tracking-wider font-semibold">${item.type}</span>
+                            </div>
+                            <div class="ml-auto text-gray-300 group-hover:text-yellow-500 transition-colors">
+                                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                            </div>
+                        </a>
+                    `;
+                });
+            } else {
+                html = `
+                    <div class="px-6 py-8 text-center">
+                        <p class="text-gray-500 text-sm font-medium">Tidak ditemukan hasil untuk "${searchInput.value}"</p>
+                    </div>
+                `;
+            }
+            searchResults.innerHTML = html;
+            searchResults.classList.remove('hidden');
+        }
+
+        // Tutup dropdown jika klik di luar
+        document.addEventListener('click', function(e) {
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+                searchResults.classList.add('hidden');
             }
         });
     </script>
-    <section class="py-16 bg-white">
+
+    <section class="py-20 bg-gradient-to-b from-slate-50 to-blue-50 relative z-20 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="w-full md:w-1/3 text-center">
-                    <div class="relative inline-block">
-                        <img src="{{asset('image/download (1).jpg')}}" alt="Kepala Dinas Sosial" class="rounded-2xl shadow-2xl border-4 border-white object-cover h-[400px] w-full">
-                        <div class="absolute -bottom-6 left-1/2 -translate-x-1/2 bg-blue-900 text-white px-6 py-3 rounded-lg shadow-lg w-max">
-                            <p class="font-bold text-sm uppercase">Dra. Istichomah, M.Si.</p>
-                            <p class="text-[10px] text-yellow-400 uppercase tracking-widest">Kepala Dinas Sosial</p>
+            <div class="flex flex-col md:flex-row items-center gap-12 md:gap-20">
+                <div class="w-full md:w-2/5 text-center relative group">
+                    <div class="relative inline-block z-10">
+                        <div class="blob-decoration group-hover:rotate-12 transition-transform duration-1000"></div>
+                        
+                        <img src="{{asset('image/kadis.png')}}" alt="Kepala Dinas Sosial" class="relative z-10 rounded-3xl shadow-2xl border-[6px] border-white object-cover h-[420px] w-full md:w-auto transition-transform duration-500 group-hover:scale-[1.02]">
+                        
+                        <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-blue-900 text-white px-8 py-4 rounded-2xl shadow-[0_10px_20px_rgba(30,58,138,0.3)] w-max z-20 transition-transform duration-300 group-hover:-translate-y-2">
+                            <p class="font-extrabold text-lg uppercase tracking-wider">Dra. Istichomah, M.Si.</p>
+                            <div class="h-0.5 w-12 bg-yellow-400 mx-auto my-1"></div>
+                            <p class="text-xs text-blue-200 uppercase tracking-[0.2em] font-semibold">Kepala Dinas Sosial</p>
                         </div>
                     </div>
                 </div>
                 
-                <div class="w-full md:w-2/3">
-                    <h2 class="text-3xl md:text-4xl font-black text-gray-800 mb-6 leading-tight">Sambutan Kepala Dinas Sosial <br><span class="text-blue-900">Kabupaten Semarang</span></h2>
-                    <div class="prose prose-blue text-gray-600 leading-relaxed italic">
-                        "Kami berkomitmen untuk memberikan pelayanan sosial yang inklusif, transparan, dan akuntabel bagi seluruh masyarakat Kabupaten Semarang. Melalui website ini, kami berharap informasi mengenai bantuan dan layanan sosial dapat diakses dengan lebih mudah dan cepat."
+                <div class="w-full md:w-3/5">
+                    <h2 class="text-3xl md:text-5xl font-black text-gray-800 mb-8 leading-tight relative">
+                        <span class="absolute -left-6 top-0 text-blue-100 text-8xl -z-10 opacity-50">“</span>
+                        Sambutan Kepala Dinas <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-700 to-blue-900">Kabupaten Semarang</span>
+                    </h2>
+                    <div class="prose prose-lg prose-blue text-gray-600 leading-relaxed italic pl-6 border-l-4 border-yellow-400">
+                        "Kami berkomitmen penuh untuk memberikan pelayanan sosial yang <strong>inklusif, transparan, dan akuntabel</strong> bagi seluruh lapisan masyarakat Kabupaten Semarang. Melalui portal digital ini, kami berharap jembatan informasi mengenai bantuan dan layanan sosial dapat diakses dengan jauh lebih mudah, cepat, dan tepat sasaran."
+                    </div>
+                    <div class="mt-8 flex items-center space-x-4">
+                        <img src="{{asset('image/kabsmg.png')}}" class="h-16 opacity-80 grayscale hover:grayscale-0 transition">
+                        <div class="text-sm font-bold text-blue-900">
+                            <p>DINAS SOSIAL</p>
+                            <p class="text-gray-500 font-normal">Kabupaten Semarang</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <main class="max-w-7xl mx-auto px-4 py-12">
-        <section class="mb-16">
-            <h3 class="text-2xl font-bold mb-8 border-l-4 border-yellow-500 pl-4">Layanan Utama</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                @foreach($services as $service)
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
-                    <h4 class="font-bold text-lg mb-2 text-blue-800">{{ $service->name }}</h4>
-                    <p class="text-gray-600 text-sm line-clamp-3">{{ $service->description }}</p>
-                    <a href="{{ route('services.index') }}"class="mt-3 block text-sm text-blue-600 underline hover:text-yellow-400">Info & Syarat Ketentuan</a>
 
-
-                @endforeach
+    <main class="max-w-7xl mx-auto px-4 py-20">
+        <section id="layanan" class="mb-24 scroll-mt-24">
+            <div class="text-center mb-12">
+                 <h3 class="text-blue-900 text-sm font-bold tracking-widest uppercase mb-2">Bidang Pelayanan</h3>
+                 <h2 class="text-4xl font-black text-gray-800">Layanan Utama Kami</h2>
+                 <div class="w-24 h-1.5 bg-yellow-400 mx-auto mt-4 rounded-full"></div>
             </div>
-        </section>
 
-        <section>
-            <h3 class="text-2xl font-bold mb-8 border-l-4 border-yellow-500 pl-4">Berita Terkini</h3>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                @foreach($posts as $post)
-                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-lg transition">
-                    @if($post->image)
-                        <img src="{{ asset('storage/' . $post->image) }}" class="w-full h-48 object-cover">
-                    @else
-                        <div class="w-full h-48 bg-gray-200 flex items-center justify-center">No Image</div>
-                    @endif
-                    <div class="p-5">
-                        <span class="text-xs font-bold text-blue-600 uppercase">{{ $post->created_at->format('d M Y') }}</span>
-                        <h4 class="font-bold text-xl mt-2 mb-3 leading-tight">{{ $post->title }}</h4>
-                        <a href="{{ route('post.show', $post->slug) }}" class="text-blue-700 hover:text-blue-900">Baca Selengkapnya</a>
+                @foreach($services as $service)
+                <div class="group bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-[0_20px_40px_-15px_rgba(30,58,138,0.15)] transition-all duration-300 hover:-translate-y-3 flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-[50%] -z-0 transition-all group-hover:bg-yellow-50 group-hover:scale-125 origin-top-right"></div>
+                    
+                    <div class="relative z-10 flex-grow">
+                         <div class="w-14 h-14 mb-6 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                         </div>
+                        <h4 class="font-bold text-xl mb-3 text-blue-900 group-hover:text-blue-700 transition-colors">{{ $service->name }}</h4>
+                        <p class="text-gray-600 text-base leading-relaxed line-clamp-3 mb-6">{{ $service->description }}</p>
                     </div>
+                    <a href="{{ route('services.index') }}" class="relative z-10 mt-auto inline-flex items-center text-sm font-bold text-blue-600 hover:text-yellow-500 transition-colors group/link">
+                        Info & Syarat Ketentuan
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </a>
                 </div>
                 @endforeach
             </div>
         </section>
+
+        <section class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 items-center md:items-end mb-12 gap-6">
+                <div class="hidden md:block"></div> <div class="text-center">
+                    <h3 class="text-blue-900 text-xs md:text-sm font-bold tracking-[0.3em] uppercase mb-2">Kabar Dinsos</h3>
+                    <h2 class="text-3xl md:text-4xl font-black text-gray-800 tracking-tighter">Berita Terkini</h2>
+                    <div class="w-20 md:w-24 h-1.5 bg-yellow-400 mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="flex justify-center md:justify-end">
+                    <a href="{{ route('posts.index') }}" class="inline-flex items-center font-bold text-sm text-blue-600 hover:text-blue-800 transition group py-2">
+                        Lihat Semua Berita
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                </div>
+            </div> <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                @foreach($posts as $post)
+                <div class="group bg-white rounded-[2rem] overflow-hidden shadow-sm border border-slate-100 hover:shadow-[0_20px_40px_-15px_rgba(30,58,138,0.15)] transition-all duration-300 hover:-translate-y-2">
+                    <div class="relative h-56 md:h-64 overflow-hidden"> <div class="absolute top-4 left-4 bg-blue-600 text-white text-[10px] font-bold uppercase px-3 py-1.5 rounded-lg z-10 shadow-md">
+                            {{ $post->created_at->format('d M Y') }}
+                        </div>
+                        @if($post->image)
+                            <img src="{{ asset('storage/' . $post->image) }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                        @else
+                            <div class="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400 font-medium">No Image</div>
+                        @endif
+                        <div class="absolute inset-0 bg-gradient-to-t from-blue-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
+                    
+                    <div class="p-8">
+                        <h4 class="font-bold text-xl mb-4 leading-snug text-gray-800 group-hover:text-blue-700 transition-colors line-clamp-2">{{ $post->title }}</h4>
+                        <a href="{{ route('post.show', $post->slug) }}" class="inline-flex items-center text-blue-600 font-bold hover:text-yellow-500 transition group/link">
+                            Baca Selengkapnya
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+
+            <div class="mt-12 text-center md:hidden">
+                <a href="{{ route('posts.index') }}" class="inline-block py-4 px-8 border-2 border-blue-600 text-blue-600 font-bold rounded-full hover:bg-blue-600 hover:text-white transition uppercase text-xs tracking-widest">
+                    Lihat Semua Berita
+                </a>
+            </div>
+        </section>
     </main>
-    <footer class="bg-blue-900 text-white pt-16 pb-8">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+
+    <footer class="bg-blue-950 text-blue-50 pt-20 pb-10 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-5" style="background-image: url('data:image/svg+xml,%3Csvg width=\'60\' height=\'60\' viewBox=\'0 0 60 60\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cg fill=\'none\' fill-rule=\'evenodd\'%3E%3Cg fill=\'%23ffffff\' fill-opacity=\'1\'%3E%3Cpath d=\'M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E');"></div>
+
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-12 mb-16 relative z-10">
             
             <div>
-                <h3 class="text-xl font-bold mb-6 border-l-4 border-yellow-500 pl-4">Hubungi Kami</h3>
-                <p class="text-blue-100 mb-4 text-sm leading-relaxed">
-                   Letjen Jl. Letjend Suprapto No.7A, Putotan, Sidomulyo, Kec. Ungaran Tim., Kabupaten Semarang, Jawa Tengah
+                <div class="flex items-center space-x-3 mb-6">
+                    <img src="{{asset('image/kabsmg.png')}}" class="h-10">
+                    <h3 class="text-xl font-bold text-white">Dinas Sosial <br><span class="text-sm font-medium text-blue-300">Kab. Semarang</span></h3>
+                </div>
+                <p class="text-blue-200 mb-6 text-sm leading-relaxed">
+                   Jl. Letjend Suprapto No.7A, Putotan, Sidomulyo, Kec. Ungaran Tim., Kabupaten Semarang, Jawa Tengah 50514
                 </p>
-                <p class="text-blue-100 mb-4 text-sm">Email: dinsos@kabsemarang.go.id</p>
-                <p class="text-blue-100 mb-4 text-sm">Telp: (024)76912203</p>
+                <div class="space-y-3">
+                    <p class="flex items-center text-blue-200 text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg> dinsos@kabsemarang.go.id</p>
+                    <p class="flex items-center text-blue-200 text-sm"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.948V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg> (024) 76912203</p>
+                </div>
                 
-                <div class="flex space-x-4 mt-6">
-                    <a href="https://www.facebook.com/dinsoskabsmg/?locale=id_ID" class="bg-blue-800 p-3 rounded-full hover:bg-yellow-500 hover:text-blue-900 transition shadow-lg">
+                <div class="flex space-x-4 mt-8">
+                    <a href="https://www.facebook.com/dinsoskabsmg/?locale=id_ID" class="bg-blue-900 p-3 rounded-full hover:bg-yellow-500 hover:text-blue-900 transition-all shadow-lg hover:-translate-y-1">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                     </a>
-                    <a href="https://www.instagram.com/dinsoskabsemarang?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="bg-blue-800 p-3 rounded-full hover:bg-yellow-500 hover:text-blue-900 transition shadow-lg">
+                    <a href="https://www.instagram.com/dinsoskabsemarang?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" class="bg-blue-900 p-3 rounded-full hover:bg-yellow-500 hover:text-blue-900 transition-all shadow-lg hover:-translate-y-1">
                         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
                     </a>
                 </div>
             </div>
 
-            <div>
-                <h3 class="text-xl font-bold mb-6 border-l-4 border-yellow-500 pl-4">Layanan Utama</h3>
-                <ul class="space-y-3 text-sm text-blue-100">
-                    <li><a href="#" class="hover:text-yellow-400 transition">Bantuan PKH</a></li>
-                    <li><a href="#" class="hover:text-yellow-400 transition">Kartu Indonesia Sehat</a></li>
-                    <li><a href="#" class="hover:text-yellow-400 transition">Santunan Kematian</a></li>
-                    <li><a href="#" class="hover:text-yellow-400 transition">Cek Status DTKS</a></li>
+            <div class="md:pl-12">
+                <h3 class="text-lg font-bold text-white mb-6 relative inline-block after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-1 after:bg-yellow-400 after:rounded-full">Akses Cepat</h3>
+                <ul class="space-y-4 text-sm text-blue-200">
+                    <li><a href="#" class="hover:text-yellow-400 transition flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg> Bantuan PKH</a></li>
+                    <li><a href="#" class="hover:text-yellow-400 transition flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg> Kartu Indonesia Sehat</a></li>
+                    <li><a href="#" class="hover:text-yellow-400 transition flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg> Santunan Kematian</a></li>
+                    <li><a href="#" class="hover:text-yellow-400 transition flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg> Cek Status DTKS</a></li>
                 </ul>
             </div>
 
-            <div>
-                <h3 class="text-xl font-bold mb-6 border-l-4 border-yellow-500 pl-4">Lokasi Kantor</h3>
-                <div class="rounded-xl overflow-hidden shadow-2xl h-48 border-2 border-blue-800">
-                   <iframe 
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.834026367341!2d110.40403367571343!3d-7.137318692866632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7088a0ebb7f019%3A0x90dd741135bfd0af!2sDinas%20Sosial%20Kab%20Semarang!5e0!3m2!1sid!2sid!4v1715870000000!5m2!1sid!2sid" 
-                    class="w-full h-full" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+           <div>
+                <h3 class="text-lg font-bold text-white mb-6 relative inline-block after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-1 after:bg-yellow-400 after:rounded-full">Lokasi Kantor</h3>
+                <div class="rounded-2xl overflow-hidden shadow-2xl h-56 border-4 border-blue-900/50 relative group">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3958.8517223396554!2d110.40403367588325!3d-7.137318692866504!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7088a0eba7f019%3A0x90dd741135bfd0af!2sDinas%20Sosial%20Kab%20Semarang!5e0!3m2!1sid!2sid!4v1706000000000!5m2!1sid!2sid" 
+                        class="w-full h-full grayscale group-hover:grayscale-0 transition-all duration-500" 
+                        style="border:0;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
                 </div>
             </div>
         </div>
         
-        <div class="border-t border-blue-800 pt-8 text-center text-xs text-blue-300">
-            &copy; 2026 Dinas Sosial Kabupaten Semarang. All Rights Reserved.
+        <div class="relative z-10 border-t border-blue-900/50 pt-8 text-center text-sm text-blue-300">
+            <p>Hak Cipta © {{ date('Y') }} Dinas Sosial Kabupaten Semarang. Dilindungi Undang-Undang.</p>
         </div>
     </footer>
 </body>
