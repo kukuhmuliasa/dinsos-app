@@ -242,7 +242,7 @@
                     <div class="relative inline-block z-10">
                         <div class="blob-decoration group-hover:rotate-12 transition-transform duration-1000"></div>
                         
-                        <img src="{{asset('public/image/kadis.jpeg')}}" alt="Kepala Dinas Sosial" class="relative z-10 rounded-3xl shadow-2xl border-[6px] border-white object-cover h-[420px] w-full md:w-auto transition-transform duration-500 group-hover:scale-[1.02]">
+                        <img src="{{asset('image/kadis.jpeg')}}" alt="Kepala Dinas Sosial" class="relative z-10 rounded-3xl shadow-2xl border-[6px] border-white object-cover h-[420px] w-full md:w-auto transition-transform duration-500 group-hover:scale-[1.02]">
                         
                         <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-blue-900 text-white px-8 py-4 rounded-2xl shadow-[0_10px_20px_rgba(30,58,138,0.3)] w-max z-20 transition-transform duration-300 group-hover:-translate-y-2">
                             <p class="font-extrabold text-lg uppercase tracking-wider">Dra. Istichomah, M.Si.</p>
