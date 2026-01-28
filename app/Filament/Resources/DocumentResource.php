@@ -20,29 +20,36 @@ class DocumentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-folder-arrow-down';
 
+   // app/Filament/Resources/DocumentResource.php
+
    public static function form(Form $form): Form
     {
     return $form
         ->schema([
+            // Input Judul Dokumen
             TextInput::make('title')
+                ->label('Judul Dokumen')
                 ->required()
-                ->label('Nama Dokumen'),
-                
-            FileUpload::make('file_path')
-                ->required()
-                ->label('Pilih File (PDF/Doc)')
-                ->directory('documents') // File akan masuk ke storage/app/public/documents
-                ->acceptedFileTypes(['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']),
-            
+                ->maxLength(255),
+
+            // Input Pilih Kategori (Pastikan isinya sama dengan logika Controller)
             Select::make('category')
+                ->label('Kategori Dokumen')
                 ->options([
-                    'layanan' => 'Formulir Layanan',
-                    'laporan' => 'Laporan Tahunan',
-                    'regulasi' => 'Peraturan',
+                    'pengaduan' => 'Pengaduan Penyalahgunaan Wewenang',
+                    'laporan_ppid' => 'Laporan PPID',
+                    'jumlah_pemohon' => 'Jumlah Pemohon Informasi',
                 ])
+                ->required()
+                ->native(false),
+
+            // Input Unggah File
+            FileUpload::make('file_path') // Harus sama dengan database
+                ->label('File Dokumen (PDF)')
+                ->directory('documents')
                 ->required(),
-        ]);
-    }
+                    ]);
+                }
 
     public static function table(Table $table): Table
     {

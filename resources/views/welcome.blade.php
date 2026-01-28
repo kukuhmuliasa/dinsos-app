@@ -50,54 +50,58 @@
                     <p class="text-[10px] md:text-xs text-blue-100 font-medium tracking-wider">Kabupaten Semarang</p>
                 </div>
             </div>
-            <ul class="hidden md:flex space-x-8 font-semibold text-sm tracking-wider uppercase items-center">
+            <ul class="hidden md:flex space-x-2 lg:space-x-4 font-semibold text-sm tracking-wider uppercase items-center">
                 <li class="flex items-center">
-                    <a href="/" class="py-2 h-10 flex items-center hover:text-yellow-400 transition-colors">Beranda</a>
+                    <a href="/" class="px-4 py-2 h-10 flex items-center hover:text-yellow-400 transition-colors">Beranda</a>
                 </li>
 
                 <li class="relative group flex items-center">
-                    <button class="flex items-center h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
+                    <button class="flex items-center px-4 h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
                         Profil
                         <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    <div class="absolute left-0 top-full w-56 bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
-                        <a href="{{ route('profile.visimisi') }}" class="block px-6 py-3 text-xs text-white hover:bg-yellow-400 hover:text-blue-950 transition-colors">Visi & Misi</a>
-                        <a href="{{ route('profile.structure') }}" class="block px-6 py-3 text-xs text-white hover:bg-yellow-400 hover:text-blue-950 transition-colors">Struktur Organisasi</a>
+                    <div class="absolute left-0 top-full w-full min-w-max bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
+                        <a href="{{ route('profile.visimisi') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Visi & Misi</a>
+                        <a href="{{ route('profile.structure') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Struktur Organisasi</a>
                     </div>
                 </li>
 
                 <li class="relative group flex items-center">
-                    <button class="flex items-center h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
+                    <button class="flex items-center px-4 h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
                         Layanan
                         <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    <div class="absolute left-0 top-full w-64 bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
-                        <a href="#" class="block px-6 py-3 text-xs text-white hover:bg-yellow-400 hover:text-blue-950 transition-colors">Kategori A</a>
-                        <a href="#" class="block px-6 py-3 text-xs text-white hover:bg-yellow-400 hover:text-blue-950 transition-colors">Kategori B</a>
+                    <div class="absolute left-0 top-full w-full min-w-max bg-blue-950 border-t-4 border-yellow-400 shadow-2xl rounded-b-2xl hidden group-hover:block z-[99] overflow-hidden">
+                        <div class="py-2">
+                            <a href="{{ route('layanan.pkh') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Bantuan PKH, BPNT & PBI-JK</a>
+                            <a href="{{ route('layanan.pip') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Rekomendasi PIP/KIP</a>
+                            <a href="{{ route('layanan.kks') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Rekomendasi KKS</a>
+                            <a href="{{ route('layanan.pajak') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Keringanan Pajak</a>
+                            <a href="{{ route('layanan.rehab') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Rehabilitasi Sosial</a>
+                            <a href="{{ route('layanan.jamsos') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all font-semibold uppercase tracking-wider">Jaminan Sosial</a>
+                        </div>
                     </div>
                 </li>
 
                 <li class="flex items-center">
-                    <a href="{{ route('posts.index') }}" class="py-2 h-10 flex items-center hover:text-yellow-400 transition-colors">Berita</a>
+                    <a href="{{ route('posts.index') }}" class="px-4 py-2 h-10 flex items-center hover:text-yellow-400 transition-colors">Berita</a>
                 </li>
 
                 <li class="relative group flex items-center">
-                    <button class="flex items-center h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
+                    <button class="flex items-center px-4 h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
                         PPID
                         <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
-                    <div class="absolute right-0 top-full w-72 bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
-                        <a href="#" class="block px-6 py-3 text-xs text-white hover:bg-yellow-400 hover:text-blue-950 transition-colors">Pengaduan Penyalahgunaan Wewenang</a>
-                        <a href="#" class="block px-6 py-3 text-xs text-white hover:bg-yellow-400 hover:text-blue-950 transition-colors">Laporan PPID</a>
-                        <div class="px-6 py-3 bg-blue-900/50 text-[10px] text-yellow-400 border-t border-white/10 font-bold uppercase tracking-tighter">
-                            Jumlah Pemohon Informasi: <span class="text-white ml-1">0</span>
-                        </div>
+                    <div class="absolute right-0 top-full w-full min-w-max bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
+                        <a href="#" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Pengaduan Penyalahgunaan Wewenang</a>
+                        <a href="#" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Laporan PPID</a>
+                        <a href="#" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Jumlah Pemohon Informasi</a>
                     </div>
                 </li>
             </ul>
@@ -323,17 +327,49 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @foreach($services as $service)
+                                    {{-- Card 1: Bantuan PKH --}}
                 <div class="group bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-[0_20px_40px_-15px_rgba(30,58,138,0.15)] transition-all duration-300 hover:-translate-y-3 flex flex-col relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-[50%] -z-0 transition-all group-hover:bg-yellow-50 group-hover:scale-125 origin-top-right"></div>
-                    
                     <div class="relative z-10 flex-grow">
-                         <div class="w-14 h-14 mb-6 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                         </div>
-                        <h4 class="font-bold text-xl mb-3 text-blue-900 group-hover:text-blue-700 transition-colors">{{ $service->name }}</h4>
-                        <p class="text-gray-600 text-base leading-relaxed line-clamp-3 mb-6">{{ $service->description }}</p>
+                        <div class="w-14 h-14 mb-6 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h4 class="font-bold text-xl mb-3 text-blue-900 group-hover:text-blue-700 transition-colors">Bantuan PKH, BPNT & PBI-JK</h4>
+                        <p class="text-gray-600 text-base leading-relaxed line-clamp-3 mb-6">Program perlindungan sosial untuk keluarga miskin melalui bantuan tunai bersyarat dan jaminan kesehatan pemerintah.</p>
                     </div>
-                    <a href="{{ route('services.index') }}" class="relative z-10 mt-auto inline-flex items-center text-sm font-bold text-blue-600 hover:text-yellow-500 transition-colors group/link">
+                    <a href="{{ route('layanan.pkh') }}" class="relative z-10 mt-auto inline-flex items-center text-sm font-bold text-blue-600 hover:text-yellow-500 transition-colors group/link">
+                        Info & Syarat Ketentuan
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </a>
+                </div>
+
+                {{-- Card 2: Rehabilitasi Sosial --}}
+                <div class="group bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-[0_20px_40px_-15px_rgba(30,58,138,0.15)] transition-all duration-300 hover:-translate-y-3 flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-[50%] -z-0 transition-all group-hover:bg-yellow-50 group-hover:scale-125 origin-top-right"></div>
+                    <div class="relative z-10 flex-grow">
+                        <div class="w-14 h-14 mb-6 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                        </div>
+                        <h4 class="font-bold text-xl mb-3 text-blue-900 group-hover:text-blue-700 transition-colors">Rehabilitasi Sosial</h4>
+                        <p class="text-gray-600 text-base leading-relaxed line-clamp-3 mb-6">Pelayanan pemulihan keberfungsian sosial bagi penyandang disabilitas, lansia terlantar, dan Pemerlu Pelayanan Kesejahteraan Sosial (PPKS).</p>
+                    </div>
+                    <a href="{{ route('layanan.rehab') }}" class="relative z-10 mt-auto inline-flex items-center text-sm font-bold text-blue-600 hover:text-yellow-500 transition-colors group/link">
+                        Info & Syarat Ketentuan
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </a>
+                </div>
+
+                {{-- Card 3: Jaminan Sosial --}}
+                <div class="group bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-[0_20px_40px_-15px_rgba(30,58,138,0.15)] transition-all duration-300 hover:-translate-y-3 flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-[50%] -z-0 transition-all group-hover:bg-yellow-50 group-hover:scale-125 origin-top-right"></div>
+                    <div class="relative z-10 flex-grow">
+                        <div class="w-14 h-14 mb-6 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A3.323 3.323 0 0010.605 4L9 4.5 7.395 4a3.323 3.323 0 00-4.013 3.984L4 10l.605 2.016A3.323 3.323 0 008.618 16h.764a3.323 3.323 0 003.013-4.016L13 10l-.382-2.016z" /></svg>
+                        </div>
+                        <h4 class="font-bold text-xl mb-3 text-blue-900 group-hover:text-blue-700 transition-colors">Jaminan Sosial</h4>
+                        <p class="text-gray-600 text-base leading-relaxed line-clamp-3 mb-6">Penyaluran asuransi kesejahteraan bagi warga rentan dan perlindungan atas risiko ekonomi seperti kematian bagi masyarakat miskin.</p>
+                    </div>
+                    <a href="{{ route('layanan.jamsos') }}" class="relative z-10 mt-auto inline-flex items-center text-sm font-bold text-blue-600 hover:text-yellow-500 transition-colors group/link">
                         Info & Syarat Ketentuan
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                     </a>
