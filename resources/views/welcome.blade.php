@@ -8,23 +8,22 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        /* --- 1. CSS Animasi Ombak --- */
+ 
         .waves { position: absolute; bottom: 0; left: 0; width: 100%; height: 120px; min-height: 100px; max-height: 160px; }
         .parallax > use { animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite; }
         .parallax > use:nth-child(1) { animation-delay: -2s; animation-duration: 7s; fill: rgba(255, 255, 255, 0.7); }
         .parallax > use:nth-child(2) { animation-delay: -3s; animation-duration: 10s; fill: rgba(255, 255, 255, 0.5); }
         .parallax > use:nth-child(3) { animation-delay: -4s; animation-duration: 13s; fill: rgba(255, 255, 255, 0.3); }
-        /* Warna ombak terakhir disamakan dengan background section sambutan (slate-50) */
+
         .parallax > use:nth-child(4) { animation-delay: -5s; animation-duration: 20s; fill: #f8fafc; } 
         
         @keyframes move-forever { 0% { transform: translate3d(-90px,0,0); } 100% { transform: translate3d(85px,0,0); } }
         @media (max-width: 768px) { .waves { height: 80px; min-height: 80px; } }
 
-        /* --- 2. Animasi Fade Up --- */
+
         .animate-fade-up { opacity: 0; animation: fadeUp 0.8s ease-out forwards; animation-delay: var(--delay, 0s); }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- 3. Dekorasi Blob (Untuk Foto Kepala Dinas) --- */
         .blob-decoration {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1.2);
             width: 100%; height: 100%;
@@ -33,7 +32,7 @@
             z-index: -1; opacity: 0.7; filter: blur(20px);
         }
 
-        /* --- 4. Scrollbar Custom untuk Dropdown Search --- */
+
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -51,11 +50,56 @@
                     <p class="text-[10px] md:text-xs text-blue-100 font-medium tracking-wider">Kabupaten Semarang</p>
                 </div>
             </div>
-            <ul class="hidden md:flex space-x-8 font-semibold text-sm tracking-wider uppercase">
-                <li><a href="/" class="py-2 hover:text-yellow-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:bg-yellow-400 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300">Beranda</a></li>
-                <li><a href="{{ route('services.index') }}" class="py-2 hover:text-yellow-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:bg-yellow-400 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300">Layanan</a></li>
-                <li><a href="{{ route('posts.index') }}" class="py-2 hover:text-yellow-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:bg-yellow-400 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300">Berita</a></li>
-                <li><a href="{{ route('documents.index') }}" class="py-2 hover:text-yellow-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:bg-yellow-400 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300">Dokumen</a></li>
+            <ul class="hidden md:flex space-x-8 font-semibold text-sm tracking-wider uppercase items-center">
+                <li class="flex items-center">
+                    <a href="/" class="py-2 h-10 flex items-center hover:text-yellow-400 transition-colors">Beranda</a>
+                </li>
+
+                <li class="relative group flex items-center">
+                    <button class="flex items-center h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
+                        Profil
+                        <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="absolute left-0 top-full w-56 bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
+                        <a href="{{ route('profile.visimisi') }}" class="block px-6 py-3 text-xs text-white hover:bg-yellow-400 hover:text-blue-950 transition-colors">Visi & Misi</a>
+                        <a href="{{ route('profile.structure') }}" class="block px-6 py-3 text-xs text-white hover:bg-yellow-400 hover:text-blue-950 transition-colors">Struktur Organisasi</a>
+                    </div>
+                </li>
+
+                <li class="relative group flex items-center">
+                    <button class="flex items-center h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
+                        Layanan
+                        <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="absolute left-0 top-full w-64 bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
+                        <a href="#" class="block px-6 py-3 text-xs text-white hover:bg-yellow-400 hover:text-blue-950 transition-colors">Kategori A</a>
+                        <a href="#" class="block px-6 py-3 text-xs text-white hover:bg-yellow-400 hover:text-blue-950 transition-colors">Kategori B</a>
+                    </div>
+                </li>
+
+                <li class="flex items-center">
+                    <a href="{{ route('posts.index') }}" class="py-2 h-10 flex items-center hover:text-yellow-400 transition-colors">Berita</a>
+                </li>
+
+                <li class="relative group flex items-center">
+                    <button class="flex items-center h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
+                        PPID
+                        <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="absolute right-0 top-full w-72 bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
+                        <a href="#" class="block px-6 py-3 text-xs text-white hover:bg-yellow-400 hover:text-blue-950 transition-colors">Pengaduan Penyalahgunaan Wewenang</a>
+                        <a href="#" class="block px-6 py-3 text-xs text-white hover:bg-yellow-400 hover:text-blue-950 transition-colors">Laporan PPID</a>
+                        <div class="px-6 py-3 bg-blue-900/50 text-[10px] text-yellow-400 border-t border-white/10 font-bold uppercase tracking-tighter">
+                            Jumlah Pemohon Informasi: <span class="text-white ml-1">0</span>
+                        </div>
+                    </div>
+                </li>
             </ul>
              <button class="md:hidden text-white focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -141,7 +185,7 @@
     </header>
 
     <script>
-        // 1. Script Navbar Glassmorphism
+  
         window.addEventListener('scroll', function() {
             const nav = document.getElementById('main-nav');
             if (window.scrollY > 50) {
@@ -153,12 +197,11 @@
             }
         });
 
-        // 2. Logic Search Autocomplete (Forecast)
+
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
         let timeout = null;
 
-        // Fungsi helper untuk tombol quick search
         function setSearch(keyword) {
             searchInput.value = keyword;
             fetchSuggestions(keyword);
@@ -173,8 +216,6 @@
                 searchResults.innerHTML = '';
                 return;
             }
-
-            // Debounce 300ms
             timeout = setTimeout(() => {
                 fetchSuggestions(query);
             }, 300);
@@ -182,7 +223,6 @@
 
         async function fetchSuggestions(query) {
             try {
-                // Pastikan route '/search/suggestions' sudah dibuat di Controller & Routes
                 const response = await fetch(`/search/suggestions?q=${query}`);
                 if (!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json();
@@ -407,7 +447,11 @@
         </div>
         
         <div class="relative z-10 border-t border-blue-900/50 pt-8 text-center text-sm text-blue-300">
-            <p>Hak Cipta © {{ date('Y') }} Dinas Sosial Kabupaten Semarang. Dilindungi Undang-Undang.</p>
+            <p>Hak Cipta © {{ date('Y') }} Dinas Sosial Kabupaten Semarang</p>
+            <p class="text-xs text-blue-300 mt-2 leading-tight">
+                Dikembangkan oleh Tim Magang Sistem Informasi UNNES<br>
+                • Kukuh Muliasa • Rizki Cahya Putra • Ahmad Zidhan Ilmana
+            </p>
         </div>
     </footer>
 </body>

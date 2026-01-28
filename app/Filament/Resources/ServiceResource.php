@@ -33,7 +33,9 @@ class ServiceResource extends Resource
                 ->live(onBlur: true)
                 ->afterStateUpdated(fn (Set $set, ?string $state) => $set('slug', Str::slug($state))),
             
-            TextInput::make('slug')->required(),
+            TextInput::make('slug')
+                ->required()
+                ->unique(ignoreRecord: true),
 
             Textarea::make('description')
                 ->required()
