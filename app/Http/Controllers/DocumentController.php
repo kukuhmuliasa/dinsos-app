@@ -27,4 +27,11 @@ class DocumentController extends Controller
         $documents = Document::where('category', 'jumlah_pemohon')->latest()->get();
         return view('documents.pemohon', compact('documents'));
     }
+
+    public function geospasial()
+    {
+        $documents = Document::where('category', 'geospasial')->latest()->get();
+        return view('documents.geospasial', compact('documents'));
+    }
+
 }

@@ -38,4 +38,5 @@ Route::prefix('ppid')->group(function () {
     Route::get('/pengaduan', [DocumentController::class, 'pengaduan'])->name('documents.pengaduan');
     Route::get('/laporan', [DocumentController::class, 'laporan'])->name('documents.laporan');
     Route::get('/jumlah-pemohon', [DocumentController::class, 'pemohon'])->name('documents.pemohon');
+    Route::get('/geospasial', [DocumentController::class, 'geospasial'])->name('documents.geospasial');
 });
