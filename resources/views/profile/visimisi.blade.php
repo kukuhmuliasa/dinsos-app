@@ -2,7 +2,12 @@
 
 @section('title', 'Visi & Misi - Dinas Sosial Kabupaten Semarang')
 @section('header_badge', 'Profil Instansi')
-@section('header_title', 'Visi & Misi')
+@section('header_title')
+    Visi & <br class="md:hidden"> 
+    <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400 filter drop-shadow-md">
+        Misi
+    </span>
+@endsection
 @section('header_description', 'Komitmen kami dalam melayani masyarakat Kabupaten Semarang.')
 
 @section('content')

@@ -86,7 +86,7 @@
                     </button>
                     <div class="absolute right-0 top-full w-max min-w-full bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
                         <a href="{{ route('documents.pengaduan') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Pengaduan Penyalahgunaan Wewenang</a>
-                        <a href="{{ route('documents.laporan') }}}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Laporan PPID</a>
+                        <a href="{{ route('documents.laporan') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Laporan PPID</a>
                         <a href="{{ route('documents.pemohon') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Jumlah Pemohon Informasi</a>
                     </div>
                 </li>

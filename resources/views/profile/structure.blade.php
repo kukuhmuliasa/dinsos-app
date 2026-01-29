@@ -2,7 +2,12 @@
 
 @section('title', 'Struktur Organisasi - Dinas Sosial Kabupaten Semarang')
 @section('header_badge', 'Profil Instansi')
-@section('header_title', 'Struktur Organisasi')
+@section('header_title')
+    Struktur<br class="md:hidden"> 
+    <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-yellow-200 to-yellow-400 filter drop-shadow-md">
+        Organisasi
+    </span>
+@endsection
 @section('header_description', 'Sinergi kepemimpinan dan tata kelola instansi yang terstruktur demi mewujudkan pelayanan sosial yang prima di Kabupaten Semarang.')
 
 @section('content')

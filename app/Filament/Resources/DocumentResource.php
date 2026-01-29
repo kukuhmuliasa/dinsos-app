@@ -38,13 +38,12 @@ class DocumentResource extends Resource
                 ->options([
                     'pengaduan' => 'Pengaduan Penyalahgunaan Wewenang',
                     'laporan_ppid' => 'Laporan PPID',
-                    'jumlah_pemohon' => 'Jumlah Pemohon Informasi',
                 ])
                 ->required()
                 ->native(false),
 
             // Input Unggah File
-            FileUpload::make('file_path') // Harus sama dengan database
+            FileUpload::make('file') // Harus sama dengan database
                 ->label('File Dokumen (PDF)')
                 ->directory('documents')
                 ->required(),
