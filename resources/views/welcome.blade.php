@@ -8,23 +8,22 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <style>
-        /* --- 1. CSS Animasi Ombak --- */
+ 
         .waves { position: absolute; bottom: 0; left: 0; width: 100%; height: 120px; min-height: 100px; max-height: 160px; }
         .parallax > use { animation: move-forever 25s cubic-bezier(.55,.5,.45,.5) infinite; }
         .parallax > use:nth-child(1) { animation-delay: -2s; animation-duration: 7s; fill: rgba(255, 255, 255, 0.7); }
         .parallax > use:nth-child(2) { animation-delay: -3s; animation-duration: 10s; fill: rgba(255, 255, 255, 0.5); }
         .parallax > use:nth-child(3) { animation-delay: -4s; animation-duration: 13s; fill: rgba(255, 255, 255, 0.3); }
-        /* Warna ombak terakhir disamakan dengan background section sambutan (slate-50) */
+
         .parallax > use:nth-child(4) { animation-delay: -5s; animation-duration: 20s; fill: #f8fafc; } 
         
         @keyframes move-forever { 0% { transform: translate3d(-90px,0,0); } 100% { transform: translate3d(85px,0,0); } }
         @media (max-width: 768px) { .waves { height: 80px; min-height: 80px; } }
 
-        /* --- 2. Animasi Fade Up --- */
+
         .animate-fade-up { opacity: 0; animation: fadeUp 0.8s ease-out forwards; animation-delay: var(--delay, 0s); }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- 3. Dekorasi Blob (Untuk Foto Kepala Dinas) --- */
         .blob-decoration {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1.2);
             width: 100%; height: 100%;
@@ -33,7 +32,7 @@
             z-index: -1; opacity: 0.7; filter: blur(20px);
         }
 
-        /* --- 4. Scrollbar Custom untuk Dropdown Search --- */
+
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -51,11 +50,61 @@
                     <p class="text-[10px] md:text-xs text-blue-100 font-medium tracking-wider">Kabupaten Semarang</p>
                 </div>
             </div>
-            <ul class="hidden md:flex space-x-8 font-semibold text-sm tracking-wider uppercase">
-                <li><a href="/" class="py-2 hover:text-yellow-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:bg-yellow-400 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300">Beranda</a></li>
-                <li><a href="{{ route('services.index') }}" class="py-2 hover:text-yellow-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:bg-yellow-400 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300">Layanan</a></li>
-                <li><a href="{{ route('posts.index') }}" class="py-2 hover:text-yellow-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:bg-yellow-400 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300">Berita</a></li>
-                <li><a href="{{ route('documents.index') }}" class="py-2 hover:text-yellow-400 transition-colors relative after:absolute after:bottom-0 after:left-0 after:bg-yellow-400 after:h-0.5 after:w-0 hover:after:w-full after:transition-all after:duration-300">Dokumen</a></li>
+            <ul class="hidden md:flex space-x-2 lg:space-x-4 font-semibold text-sm tracking-wider uppercase items-center">
+                <li class="flex items-center">
+                    <a href="/" class="px-4 py-2 h-10 flex items-center hover:text-yellow-400 transition-colors">Beranda</a>
+                </li>
+
+                <li class="relative group flex items-center">
+                    <button class="flex items-center px-4 h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
+                        Profil
+                        <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="absolute left-0 top-full w-full min-w-max bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
+                        <a href="{{ route('profile.visimisi') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Visi & Misi</a>
+                        <a href="{{ route('profile.structure') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Struktur Organisasi</a>
+                    </div>
+                </li>
+
+                <li class="relative group flex items-center">
+                    <button class="flex items-center px-4 h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
+                        Layanan
+                        <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="absolute left-0 top-full w-full min-w-max bg-blue-950 border-t-2 border-yellow-400 shadow-2xl rounded-b-2xl hidden group-hover:block z-[99] overflow-hidden">
+                        <div>
+                            <a href="{{ route('layanan.pkh') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Bantuan PKH, BPNT & PBI-JK</a>
+                            <a href="{{ route('layanan.pip') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Rekomendasi PIP/KIP</a>
+                            <a href="{{ route('layanan.kks') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Rekomendasi KKS</a>
+                            <a href="{{ route('layanan.pajak') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Keringanan Pajak</a>
+                            <a href="{{ route('layanan.rehab') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Rehabilitasi Sosial</a>
+                            <a href="{{ route('layanan.jamsos') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all font-semibold uppercase tracking-wider">Jaminan Sosial</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="flex items-center">
+                    <a href="{{ route('posts.index') }}" class="px-4 py-2 h-10 flex items-center hover:text-yellow-400 transition-colors">Berita</a>
+                </li>
+
+                <li class="relative group flex items-center">
+                    <button class="flex items-center px-4 h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
+                        PPID
+                        <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div class="absolute right-0 top-full w-full min-w-max bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
+                        <a href="{{ route('documents.pengaduan') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Pengaduan Penyalahgunaan Wewenang</a>
+                        <a href="{{ route('documents.laporan') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Laporan PPID</a>
+                        <a href="{{ route('documents.pemohon') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Jumlah Pemohon Informasi</a>
+                        <a href="{{ route('documents.geospasial') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Geospasial</a>
+                    </div>
+                </li>
             </ul>
              <button class="md:hidden text-white focus:outline-none">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -141,7 +190,7 @@
     </header>
 
     <script>
-        // 1. Script Navbar Glassmorphism
+  
         window.addEventListener('scroll', function() {
             const nav = document.getElementById('main-nav');
             if (window.scrollY > 50) {
@@ -153,12 +202,11 @@
             }
         });
 
-        // 2. Logic Search Autocomplete (Forecast)
+
         const searchInput = document.getElementById('search-input');
         const searchResults = document.getElementById('search-results');
         let timeout = null;
 
-        // Fungsi helper untuk tombol quick search
         function setSearch(keyword) {
             searchInput.value = keyword;
             fetchSuggestions(keyword);
@@ -173,8 +221,6 @@
                 searchResults.innerHTML = '';
                 return;
             }
-
-            // Debounce 300ms
             timeout = setTimeout(() => {
                 fetchSuggestions(query);
             }, 300);
@@ -182,7 +228,6 @@
 
         async function fetchSuggestions(query) {
             try {
-                // Pastikan route '/search/suggestions' sudah dibuat di Controller & Routes
                 const response = await fetch(`/search/suggestions?q=${query}`);
                 if (!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json();
@@ -283,17 +328,51 @@
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @foreach($services as $service)
+                                    {{-- Card 1: Bantuan PKH --}}
                 <div class="group bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-[0_20px_40px_-15px_rgba(30,58,138,0.15)] transition-all duration-300 hover:-translate-y-3 flex flex-col relative overflow-hidden">
                     <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-[50%] -z-0 transition-all group-hover:bg-yellow-50 group-hover:scale-125 origin-top-right"></div>
-                    
                     <div class="relative z-10 flex-grow">
-                         <div class="w-14 h-14 mb-6 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-colors">
-                             <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                         </div>
-                        <h4 class="font-bold text-xl mb-3 text-blue-900 group-hover:text-blue-700 transition-colors">{{ $service->name }}</h4>
-                        <p class="text-gray-600 text-base leading-relaxed line-clamp-3 mb-6">{{ $service->description }}</p>
+                        <div class="w-14 h-14 mb-6 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        </div>
+                        <h4 class="font-bold text-xl mb-3 text-blue-900 group-hover:text-blue-700 transition-colors">Bantuan PKH, BPNT & PBI-JK</h4>
+                        <p class="text-gray-600 text-base leading-relaxed line-clamp-3 mb-6">Program perlindungan sosial untuk keluarga miskin melalui bantuan tunai bersyarat dan jaminan kesehatan pemerintah.</p>
                     </div>
-                    <a href="{{ route('services.index') }}" class="relative z-10 mt-auto inline-flex items-center text-sm font-bold text-blue-600 hover:text-yellow-500 transition-colors group/link">
+                    <a href="{{ route('layanan.pkh') }}" class="relative z-10 mt-auto inline-flex items-center text-sm font-bold text-blue-600 hover:text-yellow-500 transition-colors group/link">
+                        Info & Syarat Ketentuan
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </a>
+                </div>
+
+                {{-- Card 2: Rehabilitasi Sosial --}}
+                <div class="group bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-[0_20px_40px_-15px_rgba(30,58,138,0.15)] transition-all duration-300 hover:-translate-y-3 flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-[50%] -z-0 transition-all group-hover:bg-yellow-50 group-hover:scale-125 origin-top-right"></div>
+                    <div class="relative z-10 flex-grow">
+                        <div class="w-14 h-14 mb-6 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+                        </div>
+                        <h4 class="font-bold text-xl mb-3 text-blue-900 group-hover:text-blue-700 transition-colors">Rehabilitasi Sosial</h4>
+                        <p class="text-gray-600 text-base leading-relaxed line-clamp-3 mb-6">Pelayanan pemulihan keberfungsian sosial bagi penyandang disabilitas, lansia terlantar, dan Pemerlu Pelayanan Kesejahteraan Sosial (PPKS).</p>
+                    </div>
+                    <a href="{{ route('layanan.rehab') }}" class="relative z-10 mt-auto inline-flex items-center text-sm font-bold text-blue-600 hover:text-yellow-500 transition-colors group/link">
+                        Info & Syarat Ketentuan
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                    </a>
+                </div>
+
+                {{-- Card 3: Jaminan Sosial --}}
+                <div class="group bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 hover:shadow-[0_20px_40px_-15px_rgba(30,58,138,0.15)] transition-all duration-300 hover:-translate-y-3 flex flex-col relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-blue-50 rounded-bl-[50%] -z-0 transition-all group-hover:bg-yellow-50 group-hover:scale-125 origin-top-right"></div>
+                    <div class="relative z-10 flex-grow">
+                        <div class="w-14 h-14 mb-6 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center shadow-sm group-hover:bg-blue-600 group-hover:text-white transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        </div>
+                        <h4 class="font-bold text-xl mb-3 text-blue-900 group-hover:text-blue-700 transition-colors">Jaminan Sosial</h4>
+                        <p class="text-gray-600 text-base leading-relaxed line-clamp-3 mb-6">Penyaluran asuransi kesejahteraan bagi warga rentan dan perlindungan atas risiko ekonomi seperti kematian bagi masyarakat miskin.</p>
+                    </div>
+                    <a href="{{ route('layanan.jamsos') }}" class="relative z-10 mt-auto inline-flex items-center text-sm font-bold text-blue-600 hover:text-yellow-500 transition-colors group/link">
                         Info & Syarat Ketentuan
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform transition-transform group-hover/link:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                     </a>
@@ -407,7 +486,11 @@
         </div>
         
         <div class="relative z-10 border-t border-blue-900/50 pt-8 text-center text-sm text-blue-300">
-            <p>Hak Cipta © {{ date('Y') }} Dinas Sosial Kabupaten Semarang. Dilindungi Undang-Undang.</p>
+            <p>Hak Cipta © {{ date('Y') }} Dinas Sosial Kabupaten Semarang</p>
+            <p class="text-xs text-blue-300 mt-2 leading-tight">
+                Dikembangkan oleh Tim Magang Sistem Informasi UNNES<br>
+                • Kukuh Muliasa • Rizki Cahya Putra • Ahmad Zidhan Ilmana
+            </p>
         </div>
     </footer>
 </body>
