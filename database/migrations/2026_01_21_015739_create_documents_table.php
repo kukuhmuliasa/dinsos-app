@@ -14,7 +14,7 @@ return new class extends Migration
     Schema::create('documents', function (Blueprint $table) {
         $table->id();
         $table->string('title'); // Nama Dokumen (misal: Laporan Tahunan 2025)
-        $table->string('file_path'); // Lokasi file PDF/Doc
+        $table->string('file'); // Lokasi file PDF/Doc
         $table->string('category')->nullable(); // Misal: Regulasi, Laporan, Pengumuman
         $table->timestamps();
     });
