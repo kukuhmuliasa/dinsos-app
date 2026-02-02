@@ -10,18 +10,19 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-{
-    Schema::table('profiles', function (Blueprint $table) {
-        // Menambahkan kolom visi dan misi ke tabel yang sudah ada
-        $table->text('visi')->after('type')->nullable(); 
-        $table->text('misi')->after('visi')->nullable();
-    });
-}
+    {
+        Schema::table('profiles', function (Blueprint $table) {
+            // Kita beri tanda // di depan agar baris ini DIABAIKAN oleh Laravel
+            // $table->text('visi')->after('type')->nullable(); 
+            // $table->text('misi')->after('visi')->nullable();
+        });
+    }
 
-public function down(): void
-{
-    Schema::table('profiles', function (Blueprint $table) {
-        $table->dropColumn(['visi', 'misi']);
-    });
-}
+    public function down(): void
+    {
+        Schema::table('profiles', function (Blueprint $table) {
+            // Ini boleh dibiarkan atau dikomentari juga, tidak berpengaruh saat migrate
+            $table->dropColumn(['visi', 'misi']);
+        });
+    }
 };

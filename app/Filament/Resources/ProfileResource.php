@@ -22,30 +22,41 @@ class ProfileResource extends Resource
 
    public static function form(Form $form): Form
     {
-        return $form->schema([
-            Forms\Components\Section::make('Manajemen Visi & Misi')
-                ->description('Gunakan bagian ini untuk mengatur Visi dan Misi instansi.')
-                ->visible(fn (Get $get) => $get('type') === 'visi_misi')
-                ->schema([
-                    Forms\Components\Textarea::make('visi')
-                        ->label('Tuliskan Visi Utama')
-                        ->rows(3)
-                        ->placeholder('Masukkan teks visi di sini...')
-                        ->helperText('Hindari penggunaan format teks berlebih (bold/italic) di sini agar tampilan di depan tetap bersih.'),
-                    
-                    Forms\Components\RichEditor::make('misi')
-                        ->label('Tuliskan Poin-Poin Misi')
-                        ->toolbarButtons(['bulletList', 'orderedList', 'undo', 'redo']) // Batasi tombol agar rapi
-                        ->placeholder('Gunakan Bullet List untuk setiap poin misi.'),
-                ]),
+    return $form->schema([
+        // 1. TAMBAHKAN INI: Input untuk memilih jenis konten
+        Forms\Components\Select::make('type')
+            ->label('Jenis Konten Profil')
+            ->options([
+                'visi_misi' => 'Visi & Misi',
+                'struktur_organisasi' => 'Struktur Organisasi',
+            ])
+            ->required()
+            ->live() // PENTING: Agar perubahan langsung terdeteksi oleh visible() di bawah
+            ->native(false),
+
+        // 2. Bagian Visi Misi (Hanya muncul jika Type = visi_misi)
+        Forms\Components\Section::make('Manajemen Visi & Misi')
+            ->description('Gunakan bagian ini untuk mengatur Visi dan Misi instansi.')
+            ->visible(fn (Get $get) => $get('type') === 'visi_misi')
+            ->schema([
+                Forms\Components\Textarea::make('visi')
+                    ->label('Tuliskan Visi Utama')
+                    ->rows(3)
+                    ->placeholder('Masukkan teks visi di sini...'),
                 
-            // Input untuk Struktur Organisasi tetap sama seperti sebelumnya
-            Forms\Components\FileUpload::make('image')
-                ->label('Bagan Struktur Organisasi')
-                ->visible(fn (Get $get) => $get('type') === 'struktur_organisasi')
-                ->directory('profile')
-                ->image(),
-        ]);
+                Forms\Components\RichEditor::make('misi')
+                    ->label('Tuliskan Poin-Poin Misi')
+                    ->toolbarButtons(['bulletList', 'orderedList', 'undo', 'redo']),
+            ]),
+            
+        // 3. Bagian Struktur (Hanya muncul jika Type = struktur_organisasi)
+        Forms\Components\FileUpload::make('image')
+            ->label('Bagan Struktur Organisasi')
+            ->visible(fn (Get $get) => $get('type') === 'struktur_organisasi')
+            ->directory('profile')
+            ->image()
+            ->columnSpanFull(),
+    ]);
     }
 
    public static function table(Table $table): Table
