@@ -64,6 +64,7 @@
                     </button>
                     <div class="absolute left-0 top-full w-full min-w-max bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
                         <a href="{{ route('profile.visimisi') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Visi & Misi</a>
+                        <a href="{{ route('profile.gambaran-umum') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Gambaran Umum Organisasi</a>
                         <a href="{{ route('profile.structure') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Struktur Organisasi</a>
                     </div>
                 </li>

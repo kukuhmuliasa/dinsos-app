@@ -23,6 +23,7 @@ Route::get('/search/results', [SearchController::class, 'results'])->name('searc
 // Profil
 Route::get('/profil/visi-misi', [ProfileController::class, 'visimisi'])->name('profile.visimisi');
 Route::get('/profil/struktur-organisasi', [ProfileController::class, 'structure'])->name('profile.structure');
+Route::get('/profil/gambaran-umum', [ProfileController::class, 'gambaranUmum'])->name('profile.gambaran-umum');
 
 // Layanan (Sistem Statis)
 Route::prefix('layanan')->group(function () {

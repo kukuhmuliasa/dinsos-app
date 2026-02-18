@@ -7,68 +7,77 @@ use App\Filament\Resources\ProfileResource\RelationManagers;
 use App\Models\Profile;
 use Filament\Forms;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Get;
+use Filament\Forms\Set; // Tambahan untuk reset image
 
 class ProfileResource extends Resource
 {
     protected static ?string $model = Profile::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    
-    protected static ?string $navigationLabel = 'Profil Instansi';
+
+    protected static ?string $navigationLabel = 'Profil Instansi'; // Label menu di sidebar
 
     public static function form(Form $form): Form
     {
         return $form->schema([
-            // 1. INPUT TIPE KONTEN (PENTING: Agar tidak error "Field type doesn't have default value")
+            // 1. INPUT TIPE KONTEN
             Forms\Components\Select::make('type')
                 ->label('Jenis Halaman')
                 ->options([
                     'visi_misi' => 'Visi & Misi',
                     'struktur_organisasi' => 'Struktur Organisasi',
+                    'gambaran_umum' => 'Gambaran Umum Organisasi', // <--- BARU: Tambahan Menu
                 ])
-                ->required() // Wajib diisi
-                ->live() // PENTING: Membuat form bereaksi langsung saat ini diganti
+                ->required()
+                ->live() // Agar form dibawahnya berubah otomatis
                 ->afterStateUpdated(fn (Set $set) => $set('image', null)), // Reset gambar jika ganti tipe
 
-            // 2. INPUT JUDUL (PENTING: Wajib ada di database)
+            // 2. INPUT JUDUL (Wajib ada agar tidak error database)
             Forms\Components\TextInput::make('title')
                 ->label('Judul Halaman')
                 ->required()
-                ->maxLength(255)
-                ->placeholder('Contoh: Visi dan Misi Dinas Sosial'),
+                ->placeholder('Contoh: Gambaran Umum Dinas Sosial')
+                ->maxLength(255),
 
-            // 3. SECTION VISI & MISI (Hanya muncul jika type = visi_misi)
+            // 3. BAGIAN VISI & MISI (Muncul jika pilih Visi & Misi)
             Forms\Components\Section::make('Manajemen Visi & Misi')
                 ->description('Isi form di bawah ini untuk Visi dan Misi.')
                 ->visible(fn (Get $get) => $get('type') === 'visi_misi') 
                 ->schema([
                     Forms\Components\Textarea::make('visi')
                         ->label('Visi Utama')
-                        ->rows(3)
-                        ->required(fn (Get $get) => $get('type') === 'visi_misi') // Validasi dinamis
-                        ->placeholder('Masukkan teks visi...'),
+                        ->rows(3),
                     
                     Forms\Components\RichEditor::make('misi')
                         ->label('Poin-Poin Misi')
-                        ->toolbarButtons(['bulletList', 'orderedList', 'bold', 'italic', 'undo', 'redo'])
-                        ->placeholder('Gunakan list untuk poin misi.'),
+                        ->toolbarButtons(['bulletList', 'orderedList', 'undo', 'redo']),
+                ]),
+
+            // 4. BAGIAN GAMBARAN UMUM (BARU: Muncul jika pilih Gambaran Umum)
+            Forms\Components\Section::make('Konten Gambaran Umum')
+                ->description('Tuliskan deskripsi lengkap mengenai organisasi.')
+                ->visible(fn (Get $get) => $get('type') === 'gambaran_umum') // Logika Tampilan
+                ->schema([
+                    // Kita gunakan kolom 'visi' untuk menyimpan teks gambaran umum agar hemat kolom
+                    Forms\Components\RichEditor::make('visi') 
+                        ->label('Isi Deskripsi')
+                        ->placeholder('Tuliskan sejarah atau gambaran umum instansi di sini...')
+                        ->columnSpanFull(),
                 ]),
                 
-            // 4. INPUT FILE UPLOAD (Hanya muncul jika type = struktur_organisasi)
+            // 5. BAGIAN STRUKTUR (Muncul jika pilih Struktur)
             Forms\Components\FileUpload::make('image')
                 ->label('Upload Bagan Struktur')
                 ->visible(fn (Get $get) => $get('type') === 'struktur_organisasi')
-                ->required(fn (Get $get) => $get('type') === 'struktur_organisasi') // Wajib jika tipe struktur
-                ->directory('profile') // Folder penyimpanan di storage/app/public/profile
+                ->directory('profile') 
                 ->image()
-                ->imageEditor(),
+                ->columnSpanFull(),
         ]);
     }
 
@@ -81,22 +90,23 @@ class ProfileResource extends Resource
                     ->searchable(),
                     
                 Tables\Columns\TextColumn::make('type')
-                    ->label('Tipe')
-                    ->badge() // Agar tampilannya seperti label warna
+                    ->label('Tipe Konten')
+                    ->badge()
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'visi_misi' => 'Visi & Misi',
                         'struktur_organisasi' => 'Struktur',
+                        'gambaran_umum' => 'Gambaran Umum', // <--- Format Label di Tabel
                         default => $state,
                     })
                     ->colors([
                         'primary' => 'visi_misi',
+                        'success' => 'gambaran_umum',
                         'warning' => 'struktur_organisasi',
                     ]),
 
                 Tables\Columns\TextColumn::make('updated_at')
                     ->label('Terakhir Update')
-                    ->dateTime('d M Y, H:i')
-                    ->sortable(),
+                    ->dateTime('d M Y, H:i'),
             ])
             ->filters([
                 //
