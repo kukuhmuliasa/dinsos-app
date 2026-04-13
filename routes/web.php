@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProfileController;
@@ -24,14 +25,13 @@ Route::get('/search/results', [SearchController::class, 'results'])->name('searc
 Route::get('/profil/visi-misi', [ProfileController::class, 'visimisi'])->name('profile.visimisi');
 Route::get('/profil/struktur-organisasi', [ProfileController::class, 'structure'])->name('profile.structure');
 
-// Layanan (Sistem Statis)
+// ═══════════════════════════════════════════════════
+// Layanan (Sistem Dinamis – menggantikan Route::view)
+// ═══════════════════════════════════════════════════
 Route::prefix('layanan')->group(function () {
-    Route::view('/pkh-bpnt-pbi', 'services.pkh')->name('layanan.pkh');
-    Route::view('/pip-kip', 'services.pip')->name('layanan.pip');
-    Route::view('/kks', 'services.kks')->name('layanan.kks');
-    Route::view('/pajak', 'services.pajak')->name('layanan.pajak');
-    Route::view('/rehabilitasi-sosial', 'services.rehab')->name('layanan.rehab');
-    Route::view('/jaminan-sosial', 'services.jamsos')->name('layanan.jamsos');
+    Route::get('/', [ServiceController::class, 'index'])->name('layanan.index');
+    Route::get('/cek-kelayakan', [ServiceController::class, 'simulator'])->name('layanan.simulator');
+    Route::get('/{slug}', [ServiceController::class, 'show'])->name('layanan.show');
 });
 
 Route::prefix('ppid')->group(function () {

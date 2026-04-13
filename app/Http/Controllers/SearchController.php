@@ -27,7 +27,7 @@ class SearchController extends Controller
                             return [
                                 'title' => $item->name,
                                 'type' => 'Layanan',
-                                'url' => route('services.index')
+                                'url' => route('layanan.show', $item->slug)
                             ];
                         });
         } catch (\Exception $e) {
@@ -74,6 +74,6 @@ class SearchController extends Controller
     {
         // Logika untuk menampilkan halaman hasil pencarian
         // Untuk sementara redirect ke layanan dulu
-        return redirect()->route('services.index');
+        return redirect()->route('layanan.index');
     }
 }

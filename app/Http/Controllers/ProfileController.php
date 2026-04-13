@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Profile;
+use App\Models\OrganizationMember;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
@@ -16,8 +17,13 @@ class ProfileController extends Controller
 
     public function structure()
     {
-        // Mengambil data tipe struktur_organisasi
-        $data = Profile::where('type', 'struktur_organisasi')->first();
-        return view('profile.structure', compact('data'));
+        // Mengambil data struktur organisasi dari tabel organization_members
+        // Root nodes = yang tidak punya atasan (parent_id = null)
+        $members = OrganizationMember::whereNull('parent_id')
+            ->with('childrenRecursive')
+            ->orderBy('sort_order')
+            ->get();
+
+        return view('profile.structure', compact('members'));
     }
 }
