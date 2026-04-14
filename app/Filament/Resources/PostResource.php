@@ -69,14 +69,12 @@ class PostResource extends Resource
             TextColumn::make('created_at')->dateTime(),
         ])
         ->filters([
-            //
         ]);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
         ];
     }
 

@@ -23,7 +23,6 @@ class ServiceResource extends Resource
     {
         return $form->schema([
 
-            // ── Section 1: Informasi Utama ──
             Forms\Components\Section::make('Informasi Utama')
                 ->icon('heroicon-o-information-circle')
                 ->schema([
@@ -90,7 +89,6 @@ class ServiceResource extends Resource
                     ]),
                 ])->columns(2),
 
-            // ── Section 2: Dasar Hukum ──
             Forms\Components\Section::make('Dasar Hukum')
                 ->icon('heroicon-o-scale')
                 ->collapsible()
@@ -134,7 +132,6 @@ class ServiceResource extends Resource
                         ->reorderable(false),
                 ]),
 
-            // ── Section 3: Persyaratan ──
             Forms\Components\Section::make('Persyaratan')
                 ->icon('heroicon-o-clipboard-document-check')
                 ->collapsible()
@@ -163,7 +160,6 @@ class ServiceResource extends Resource
                         ->reorderableWithButtons(),
                 ]),
 
-            // ── Section 4: Alur Prosedur ──
             Forms\Components\Section::make('Alur Prosedur (Stepper)')
                 ->icon('heroicon-o-list-bullet')
                 ->collapsible()
@@ -192,7 +188,6 @@ class ServiceResource extends Resource
                         ->reorderableWithButtons(),
                 ]),
 
-            // ── Section 5: FAQ ──
             Forms\Components\Section::make('FAQ (Pertanyaan Umum)')
                 ->icon('heroicon-o-question-mark-circle')
                 ->collapsible()
@@ -220,7 +215,6 @@ class ServiceResource extends Resource
                         ->reorderableWithButtons(),
                 ]),
 
-            // ── Section 6: Kriteria Kelayakan ──
             Forms\Components\Section::make('Kriteria Kelayakan (Simulator)')
                 ->icon('heroicon-o-calculator')
                 ->collapsible()

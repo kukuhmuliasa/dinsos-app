@@ -11,10 +11,10 @@ return new class extends Migration
         Schema::create('eligibility_criteria', function (Blueprint $table) {
             $table->id();
             $table->foreignId('service_id')->constrained()->cascadeOnDelete();
-            $table->string('criteria_name');        // Desil, Penghasilan, Usia, dll
-            $table->string('criteria_type');         // desil, income, age, status
-            $table->string('operator')->default('<='); // <=, >=, ==, between
-            $table->string('value');                 // 1-4, 5000000, 60
+            $table->string('criteria_name');
+            $table->string('criteria_type');
+            $table->string('operator')->default('<=');
+            $table->string('value');
             $table->text('display_label')->nullable();
             $table->integer('sort_order')->default(0);
             $table->timestamps();

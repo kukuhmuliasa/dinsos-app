@@ -280,7 +280,6 @@
             searchResults.classList.remove('hidden');
         }
 
-        // Tutup dropdown jika klik di luar
         document.addEventListener('click', function(e) {
             if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
                 searchResults.classList.add('hidden');

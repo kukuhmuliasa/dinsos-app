@@ -42,11 +42,9 @@
 
             <div class="space-y-6">
                 @php
-                    // Membersihkan Misi dari tag HTML yang mungkin terbawa dari RichEditor
                     preg_match_all('/<li>(.*?)<\/li>/', $data->misi, $matches);
                     $items = $matches[1];
                     
-                    // Fallback jika tidak menggunakan list di editor
                     if(empty($items)) {
                         $items = array_filter(explode("\n", strip_tags($data->misi)));
                     }

@@ -28,7 +28,6 @@ class Service extends Model
         'is_featured' => 'boolean',
     ];
 
-    // ── Relationships ──
 
     public function category(): BelongsTo
     {

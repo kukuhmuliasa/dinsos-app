@@ -19,7 +19,6 @@ return new class extends Migration
             $table->integer('sort_order')->default(0)->after('is_featured');
         });
 
-        // Change description to longText
         Schema::table('services', function (Blueprint $table) {
             $table->longText('description')->nullable()->change();
             $table->text('requirements')->nullable()->change();

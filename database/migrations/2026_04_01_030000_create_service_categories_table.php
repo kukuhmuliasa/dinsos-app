@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('service_categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name');           // Bidang PPKS / Bidang PPMKS
+            $table->string('name');
             $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->string('icon')->nullable();

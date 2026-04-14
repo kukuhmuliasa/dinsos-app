@@ -13,11 +13,11 @@ return new class extends Migration
     {
     Schema::create('profiles', function (Blueprint $table) {
         $table->id();
-        $table->string('type'); // Untuk membedakan 'visi_misi' atau 'struktur_organisasi'
+        $table->string('type');
         $table->string('title');
-        $table->text('visi')->nullable(); // Kolom khusus Visi
-        $table->text('misi')->nullable(); // Kolom khusus Misi
-        $table->string('image')->nullable(); // Untuk foto struktur organisasi
+        $table->text('visi')->nullable();
+        $table->text('misi')->nullable();
+        $table->string('image')->nullable();
         $table->timestamps();
     });
     }

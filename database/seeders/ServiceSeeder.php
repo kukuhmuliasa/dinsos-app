@@ -16,7 +16,6 @@ class ServiceSeeder extends Seeder
 {
     public function run(): void
     {
-        // Bersihkan data lama agar seeder bisa dijalankan ulang
         DB::statement('SET FOREIGN_KEY_CHECKS=0;');
         DB::table('eligibility_criteria')->truncate();
         DB::table('service_faqs')->truncate();
@@ -27,9 +26,6 @@ class ServiceSeeder extends Seeder
         DB::table('service_categories')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
 
-        // ═══════════════════════════════════════
-        // 1. Kategori Bidang
-        // ═══════════════════════════════════════
         $ppks = ServiceCategory::create([
             'name'        => 'Bidang PPKS',
             'slug'        => 'bidang-ppks',
@@ -48,11 +44,7 @@ class ServiceSeeder extends Seeder
             'is_active'   => true,
         ]);
 
-        // ═══════════════════════════════════════
-        // 2. Layanan Bidang PPKS
-        // ═══════════════════════════════════════
 
-        // --- 2a. SLRT GEMPITA SENA ---
         $slrt = Service::create([
             'category_id'       => $ppks->id,
             'name'              => 'SLRT Gempita Sena',
@@ -82,7 +74,6 @@ class ServiceSeeder extends Seeder
             'sort_order'        => 1,
         ]);
 
-        // Steps SLRT
         $slrtSteps = [
             ['step_number' => 1, 'title' => 'Pendataan Masyarakat', 'description' => 'Masyarakat yang belum terdaftar di DTSEN melaporkan diri ke RT/RW atau langsung ke kantor desa/kelurahan.'],
             ['step_number' => 2, 'title' => 'Musdes / Muskel', 'description' => 'Musyawarah Desa/Kelurahan untuk memverifikasi dan menyusun daftar usulan rumah tangga miskin.'],
@@ -95,25 +86,20 @@ class ServiceSeeder extends Seeder
             ServiceStep::create(array_merge($step, ['service_id' => $slrt->id]));
         }
 
-        // Legal bases SLRT
         ServiceLegalBase::create(['service_id' => $slrt->id, 'regulation_number' => 'Kepmen No 79/HUK/2025', 'regulation_title' => 'Pedoman Pengelolaan Data Tunggal Sosial Ekonomi Nasional', 'regulation_type' => 'Kepmen', 'year' => 2025]);
         ServiceLegalBase::create(['service_id' => $slrt->id, 'regulation_number' => 'Permensos No 15 Tahun 2018', 'regulation_title' => 'Sistem Layanan dan Rujukan Terpadu untuk Penanganan Fakir Miskin dan Orang Tidak Mampu', 'regulation_type' => 'Permen', 'year' => 2018]);
 
-        // Requirements SLRT
         ServiceRequirement::create(['service_id' => $slrt->id, 'title' => 'KTP/NIK', 'description' => 'Kartu Tanda Penduduk elektronik atau Nomor Induk Kependudukan.', 'is_mandatory' => true, 'sort_order' => 1]);
         ServiceRequirement::create(['service_id' => $slrt->id, 'title' => 'Kartu Keluarga (KK)', 'description' => 'Kartu Keluarga asli dan fotocopy.', 'is_mandatory' => true, 'sort_order' => 2]);
         ServiceRequirement::create(['service_id' => $slrt->id, 'title' => 'Surat Keterangan RT/RW', 'description' => 'Surat keterangan tidak mampu dari RT/RW setempat.', 'is_mandatory' => true, 'sort_order' => 3]);
         ServiceRequirement::create(['service_id' => $slrt->id, 'title' => 'Foto Kondisi Rumah', 'description' => 'Dokumentasi foto tampak depan dan kondisi dalam rumah (opsional).', 'is_mandatory' => false, 'sort_order' => 4]);
 
-        // FAQs SLRT
         ServiceFaq::create(['service_id' => $slrt->id, 'question' => 'Apa perbedaan DTKS dan DTSEN?', 'answer' => 'DTSEN (Data Tunggal Sosial Ekonomi Nasional) adalah pengganti DTKS yang lebih komprehensif, mencakup 10 variabel pendataan dan digunakan sebagai basis data tunggal untuk seluruh program bantuan sosial nasional.', 'sort_order' => 1]);
         ServiceFaq::create(['service_id' => $slrt->id, 'question' => 'Bagaimana cara mengecek apakah saya terdaftar di DTSEN?', 'answer' => 'Anda dapat mengecek melalui website cekbansos.kemensos.go.id atau langsung datang ke kantor Dinas Sosial Kabupaten Semarang dengan membawa KTP.', 'sort_order' => 2]);
         ServiceFaq::create(['service_id' => $slrt->id, 'question' => 'Apa itu Desil dan berapa desil saya?', 'answer' => 'Desil adalah tingkat kemiskinan berdasarkan pendapatan. Desil 1 = paling miskin, Desil 10 = paling kaya. Desil Anda ditentukan oleh data survei BPS dan bisa dicek di DTSEN.', 'sort_order' => 3]);
 
-        // Eligibility Criteria SLRT
         EligibilityCriteria::create(['service_id' => $slrt->id, 'criteria_name' => 'Desil Kemiskinan', 'criteria_type' => 'desil', 'operator' => 'between', 'value' => '1-5', 'display_label' => 'Desil 1-5 (Keluarga miskin dan rentan miskin)', 'sort_order' => 1]);
 
-        // --- 2b. Bantuan PKH, BPNT & PBI-JK ---
         $pkh = Service::create([
             'category_id'       => $ppks->id,
             'name'              => 'Bantuan PKH, BPNT & PBI-JK',
@@ -151,7 +137,6 @@ class ServiceSeeder extends Seeder
         EligibilityCriteria::create(['service_id' => $pkh->id, 'criteria_name' => 'Desil (PKH)', 'criteria_type' => 'desil', 'operator' => 'between', 'value' => '1-4', 'display_label' => 'PKH: Desil 1-4 (Sangat miskin hingga rentan miskin)', 'sort_order' => 1]);
         EligibilityCriteria::create(['service_id' => $pkh->id, 'criteria_name' => 'Desil (BPNT & PBI-JK)', 'criteria_type' => 'desil', 'operator' => 'between', 'value' => '1-5', 'display_label' => 'BPNT & PBI-JK: Desil 1-5 (Termasuk menengah bawah)', 'sort_order' => 2]);
 
-        // --- 2c. Rekomendasi PIP/KIP ---
         $pip = Service::create([
             'category_id'       => $ppks->id,
             'name'              => 'Rekomendasi PIP/KIP',
@@ -176,7 +161,6 @@ class ServiceSeeder extends Seeder
 
         EligibilityCriteria::create(['service_id' => $pip->id, 'criteria_name' => 'Desil Kemiskinan', 'criteria_type' => 'desil', 'operator' => 'between', 'value' => '1-4', 'display_label' => 'Desil 1-4 (Keluarga miskin)', 'sort_order' => 1]);
 
-        // --- 2d. Rekomendasi KKS ---
         $kks = Service::create([
             'category_id'       => $ppks->id,
             'name'              => 'Rekomendasi KKS',
@@ -197,11 +181,7 @@ class ServiceSeeder extends Seeder
 
         EligibilityCriteria::create(['service_id' => $kks->id, 'criteria_name' => 'Desil Kemiskinan', 'criteria_type' => 'desil', 'operator' => 'between', 'value' => '1-5', 'display_label' => 'Desil 1-5 (Keluarga kurang mampu)', 'sort_order' => 1]);
 
-        // ═══════════════════════════════════════
-        // 3. Layanan Bidang PPMKS
-        // ═══════════════════════════════════════
 
-        // --- 3a. KUBE ---
         $kube = Service::create([
             'category_id'       => $ppmks->id,
             'name'              => 'KUBE (Kelompok Usaha Bersama)',
@@ -235,7 +215,6 @@ class ServiceSeeder extends Seeder
         EligibilityCriteria::create(['service_id' => $kube->id, 'criteria_name' => 'Desil Kemiskinan', 'criteria_type' => 'desil', 'operator' => 'between', 'value' => '1-4', 'display_label' => 'Desil 1-4 (Keluarga miskin)', 'sort_order' => 1]);
         EligibilityCriteria::create(['service_id' => $kube->id, 'criteria_name' => 'Usia Produktif', 'criteria_type' => 'age', 'operator' => '>=', 'value' => '18', 'display_label' => 'Usia minimal 18 tahun (usia produktif)', 'sort_order' => 2]);
 
-        // --- 3b. BLT Cukai (DBHCHT) ---
         $blt = Service::create([
             'category_id'       => $ppmks->id,
             'name'              => 'BLT Cukai (DBHCHT)',
@@ -264,7 +243,6 @@ class ServiceSeeder extends Seeder
         EligibilityCriteria::create(['service_id' => $blt->id, 'criteria_name' => 'Status Pekerjaan', 'criteria_type' => 'status', 'operator' => '==', 'value' => 'petani,buruh_pabrik', 'display_label' => 'Buruh tani tembakau atau buruh pabrik rokok', 'sort_order' => 1]);
         EligibilityCriteria::create(['service_id' => $blt->id, 'criteria_name' => 'Penghasilan Maksimal', 'criteria_type' => 'income', 'operator' => '<=', 'value' => '5000000', 'display_label' => 'Penghasilan ≤ Rp 5.000.000/bulan', 'sort_order' => 2]);
 
-        // --- 3c. Rehabilitasi Sosial ---
         $rehab = Service::create([
             'category_id'       => $ppmks->id,
             'name'              => 'Rehabilitasi Sosial',
@@ -288,7 +266,6 @@ class ServiceSeeder extends Seeder
 
         EligibilityCriteria::create(['service_id' => $rehab->id, 'criteria_name' => 'Usia Lansia', 'criteria_type' => 'age', 'operator' => '>=', 'value' => '60', 'display_label' => 'Usia 60+ tahun (untuk layanan lansia)', 'sort_order' => 1]);
 
-        // --- 3d. Keringanan Pajak ---
         $pajak = Service::create([
             'category_id'       => $ppmks->id,
             'name'              => 'Keringanan Pajak',
@@ -311,7 +288,6 @@ class ServiceSeeder extends Seeder
 
         EligibilityCriteria::create(['service_id' => $pajak->id, 'criteria_name' => 'Desil Kemiskinan', 'criteria_type' => 'desil', 'operator' => 'between', 'value' => '1-4', 'display_label' => 'Desil 1-4 (Keluarga miskin dan rentan)', 'sort_order' => 1]);
 
-        // --- 3e. Jaminan Sosial ---
         $jamsos = Service::create([
             'category_id'       => $ppmks->id,
             'name'              => 'Jaminan Sosial',

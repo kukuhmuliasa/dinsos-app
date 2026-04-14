@@ -36,7 +36,6 @@ class HomeController extends Controller
     }
     public function documents()
     {
-    // Mengambil semua dokumen, dikelompokkan berdasarkan kategori
     $documents = \App\Models\Document::latest()->get();
     
     return view('documents', compact('documents'));

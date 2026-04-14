@@ -13,11 +13,11 @@ return new class extends Migration
     {   
     Schema::create('services', function (Blueprint $table) {
         $table->id();
-        $table->string('name'); // Nama Layanan (misal: Bantuan PKH)
+        $table->string('name');
         $table->string('slug')->unique();
-        $table->text('description'); // Penjelasan singkat
-        $table->text('requirements'); // Syarat-syarat (bisa pake list)
-        $table->string('icon')->nullable(); // Ikon untuk mempercantik tampilan nanti
+        $table->text('description');
+        $table->text('requirements');
+        $table->string('icon')->nullable();
         $table->boolean('is_active')->default(true);
         $table->timestamps();
     });

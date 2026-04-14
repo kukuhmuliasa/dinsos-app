@@ -13,7 +13,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
     }
 
     /**
@@ -21,7 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-    // Gunakan try-catch agar jika tabel/kolom belum ada, web tidak langsung mati total
     
     }
 }
