@@ -103,15 +103,21 @@
             </ul>
 
             {{-- Hamburger Button --}}
-            <button id="app-hamburger-btn" class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-lg focus:outline-none" aria-label="Buka Menu" aria-expanded="false">
-                <span class="app-ham-line block w-6 h-0.5 bg-white transition-all duration-300"></span>
-                <span class="app-ham-line block w-6 h-0.5 bg-white mt-1.5 transition-all duration-300"></span>
-                <span class="app-ham-line block w-6 h-0.5 bg-white mt-1.5 transition-all duration-300"></span>
+            <button id="app-hamburger-btn" class="md:hidden flex items-center justify-center p-1 focus:outline-none" aria-label="Buka Menu" aria-expanded="false">
+                <span class="sr-only">Buka Menu</span>
+                {{-- Hamburger Icon --}}
+                <svg id="app-icon-open" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                {{-- Close (X) Icon --}}
+                <svg id="app-icon-close" class="w-6 h-6 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
             </button>
         </div>
 
         {{-- Mobile Menu Panel --}}
-        <div id="app-mobile-menu" class="md:hidden hidden bg-blue-950/98 backdrop-blur-md border-t border-blue-800/50 overflow-y-auto max-h-[80vh]">
+        <div id="app-mobile-menu" class="md:hidden hidden bg-blue-950 border-t border-blue-800/50 overflow-y-auto max-h-[80vh]">
             <ul class="px-4 py-4 space-y-1 font-semibold text-sm uppercase tracking-wider">
                 <li>
                     <a href="/" class="block px-4 py-3 rounded-lg hover:bg-yellow-400 hover:text-blue-950 transition-colors">Beranda</a>
@@ -267,7 +273,8 @@
         // Hamburger toggle
         const appHamBtn = document.getElementById('app-hamburger-btn');
         const appMobileMenu = document.getElementById('app-mobile-menu');
-        const appHamLines = appHamBtn.querySelectorAll('.app-ham-line');
+        const appIconOpen = document.getElementById('app-icon-open');
+        const appIconClose = document.getElementById('app-icon-close');
         let appMenuOpen = false;
 
         appHamBtn.addEventListener('click', function() {
@@ -275,13 +282,11 @@
             appMobileMenu.classList.toggle('hidden', !appMenuOpen);
             appHamBtn.setAttribute('aria-expanded', appMenuOpen);
             if (appMenuOpen) {
-                appHamLines[0].style.transform = 'translateY(8px) rotate(45deg)';
-                appHamLines[1].style.opacity = '0';
-                appHamLines[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+                appIconOpen.classList.add('hidden');
+                appIconClose.classList.remove('hidden');
             } else {
-                appHamLines[0].style.transform = '';
-                appHamLines[1].style.opacity = '';
-                appHamLines[2].style.transform = '';
+                appIconOpen.classList.remove('hidden');
+                appIconClose.classList.add('hidden');
             }
         });
 
@@ -304,9 +309,8 @@
         document.addEventListener('click', function(e) {
             if (appMenuOpen && !document.getElementById('main-nav').contains(e.target)) {
                 appMobileMenu.classList.add('hidden');
-                appHamLines[0].style.transform = '';
-                appHamLines[1].style.opacity = '';
-                appHamLines[2].style.transform = '';
+                appIconOpen.classList.remove('hidden');
+                appIconClose.classList.add('hidden');
                 appMenuOpen = false;
                 appHamBtn.setAttribute('aria-expanded', 'false');
             }
