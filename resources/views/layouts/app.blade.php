@@ -118,7 +118,7 @@
                 </li>
                 <li>
                     <button class="app-acc-btn w-full flex justify-between items-center px-4 py-3 rounded-lg hover:bg-blue-900 transition-colors">
-                        <span>Profil</span>
+                        <span class="uppercase">Profil</span>
                         <svg class="app-acc-arrow w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="app-acc-content hidden pl-4 mt-1 space-y-1">
@@ -128,7 +128,7 @@
                 </li>
                 <li>
                     <button class="app-acc-btn w-full flex justify-between items-center px-4 py-3 rounded-lg hover:bg-blue-900 transition-colors">
-                        <span>Layanan</span>
+                        <span class="uppercase">Layanan</span>
                         <svg class="app-acc-arrow w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="app-acc-content hidden pl-4 mt-1 space-y-1">
@@ -151,7 +151,7 @@
                 </li>
                 <li>
                     <button class="app-acc-btn w-full flex justify-between items-center px-4 py-3 rounded-lg hover:bg-blue-900 transition-colors">
-                        <span>PPID</span>
+                        <span class="uppercase">PPID</span>
                         <svg class="app-acc-arrow w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                     </button>
                     <div class="app-acc-content hidden pl-4 mt-1 space-y-1">
