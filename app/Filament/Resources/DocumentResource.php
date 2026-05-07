@@ -12,6 +12,8 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput; 
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+
 
 class DocumentResource extends Resource
 {
@@ -50,6 +52,14 @@ class DocumentResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('title')
+                    ->label('Judul Dokumen')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('category')
+                    ->label('Kategori')
+                    ->searchable()
+                    ->sortable(),
             ])
             ->filters([
             ])

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="google-site-verification" content="97ytQMS4o9HPpIACrP4z59stnfCo7z6w90KwHqN5Jm4" />
     <title>Dinas Sosial Kabupaten Semarang</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -114,11 +115,67 @@
                     </div>
                 </li>
             </ul>
-             <button class="md:hidden text-white focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                </svg>
+
+            {{-- Hamburger Button --}}
+            <button id="wel-hamburger-btn" class="md:hidden flex flex-col justify-center items-center w-10 h-10 rounded-lg focus:outline-none" aria-label="Buka Menu" aria-expanded="false">
+                <span class="wel-ham-line block w-6 h-0.5 bg-white transition-all duration-300"></span>
+                <span class="wel-ham-line block w-6 h-0.5 bg-white mt-1.5 transition-all duration-300"></span>
+                <span class="wel-ham-line block w-6 h-0.5 bg-white mt-1.5 transition-all duration-300"></span>
             </button>
+        </div>
+
+        {{-- Mobile Menu Panel --}}
+        <div id="wel-mobile-menu" class="md:hidden hidden bg-blue-950/98 backdrop-blur-md border-t border-blue-800/50 overflow-y-auto max-h-[80vh]">
+            <ul class="px-4 py-4 space-y-1 font-semibold text-sm uppercase tracking-wider">
+                <li>
+                    <a href="/" class="block px-4 py-3 rounded-lg hover:bg-yellow-400 hover:text-blue-950 transition-colors">Beranda</a>
+                </li>
+                <li>
+                    <button class="wel-acc-btn w-full flex justify-between items-center px-4 py-3 rounded-lg hover:bg-blue-900 transition-colors">
+                        <span>Profil</span>
+                        <svg class="wel-acc-arrow w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="wel-acc-content hidden pl-4 mt-1 space-y-1">
+                        <a href="{{ route('profile.visimisi') }}" class="block px-4 py-2.5 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">Visi &amp; Misi</a>
+                        <a href="{{ route('profile.structure') }}" class="block px-4 py-2.5 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">Struktur Organisasi</a>
+                    </div>
+                </li>
+                <li>
+                    <button class="wel-acc-btn w-full flex justify-between items-center px-4 py-3 rounded-lg hover:bg-blue-900 transition-colors">
+                        <span>Layanan</span>
+                        <svg class="wel-acc-arrow w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="wel-acc-content hidden pl-4 mt-1 space-y-1">
+                        @foreach($navCategories as $cat)
+                            <p class="px-4 pt-3 pb-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-yellow-400">{{ $cat->name }}</p>
+                            @foreach($cat->activeServices as $svc)
+                            <a href="{{ route('layanan.show', $svc->slug) }}" class="block px-4 py-2 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">{{ $svc->name }}</a>
+                            @endforeach
+                        @endforeach
+                        <div class="border-t border-blue-800/50 mt-2 pt-2">
+                            <a href="{{ route('layanan.simulator') }}" class="flex items-center gap-2 px-4 py-2.5 rounded-lg text-yellow-400 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs font-bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                Cek Kelayakan Bantuan
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="{{ route('posts.index') }}" class="block px-4 py-3 rounded-lg hover:bg-yellow-400 hover:text-blue-950 transition-colors">Berita</a>
+                </li>
+                <li>
+                    <button class="wel-acc-btn w-full flex justify-between items-center px-4 py-3 rounded-lg hover:bg-blue-900 transition-colors">
+                        <span>PPID</span>
+                        <svg class="wel-acc-arrow w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="wel-acc-content hidden pl-4 mt-1 space-y-1">
+                        <a href="{{ route('documents.pengaduan') }}" class="block px-4 py-2.5 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">Pengaduan Penyalahgunaan Wewenang</a>
+                        <a href="{{ route('documents.laporan') }}" class="block px-4 py-2.5 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">Laporan PPID</a>
+                        <a href="{{ route('documents.pemohon') }}" class="block px-4 py-2.5 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">Jumlah Pemohon Informasi</a>
+                        <a href="{{ route('documents.geospasial') }}" class="block px-4 py-2.5 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">Geospasial</a>
+                    </div>
+                </li>
+            </ul>
         </div>
     </nav>
 
@@ -209,6 +266,55 @@
                 nav.classList.add('py-4');
             }
         });
+
+        // Hamburger toggle
+        const welHamBtn = document.getElementById('wel-hamburger-btn');
+        const welMobileMenu = document.getElementById('wel-mobile-menu');
+        const welHamLines = welHamBtn.querySelectorAll('.wel-ham-line');
+        let welMenuOpen = false;
+
+        welHamBtn.addEventListener('click', function() {
+            welMenuOpen = !welMenuOpen;
+            welMobileMenu.classList.toggle('hidden', !welMenuOpen);
+            welHamBtn.setAttribute('aria-expanded', welMenuOpen);
+            if (welMenuOpen) {
+                welHamLines[0].style.transform = 'translateY(8px) rotate(45deg)';
+                welHamLines[1].style.opacity = '0';
+                welHamLines[2].style.transform = 'translateY(-8px) rotate(-45deg)';
+            } else {
+                welHamLines[0].style.transform = '';
+                welHamLines[1].style.opacity = '';
+                welHamLines[2].style.transform = '';
+            }
+        });
+
+        // Accordion sub-menu
+        document.querySelectorAll('.wel-acc-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                const content = btn.nextElementSibling;
+                const arrow = btn.querySelector('.wel-acc-arrow');
+                const isOpen = !content.classList.contains('hidden');
+                document.querySelectorAll('.wel-acc-content').forEach(c => c.classList.add('hidden'));
+                document.querySelectorAll('.wel-acc-arrow').forEach(a => a.style.transform = '');
+                if (!isOpen) {
+                    content.classList.remove('hidden');
+                    arrow.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Tutup saat klik di luar
+        document.addEventListener('click', function(e) {
+            if (welMenuOpen && !document.getElementById('main-nav').contains(e.target)) {
+                welMobileMenu.classList.add('hidden');
+                welHamLines[0].style.transform = '';
+                welHamLines[1].style.opacity = '';
+                welHamLines[2].style.transform = '';
+                welMenuOpen = false;
+                welHamBtn.setAttribute('aria-expanded', 'false');
+            }
+        });
+
 
 
         const searchInput = document.getElementById('search-input');
