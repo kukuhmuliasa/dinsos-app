@@ -2,7 +2,7 @@
 <li class="org-fade-in" style="animation-delay: {{ $delay ?? 0 }}s">
     <div class="org-card {{ ($isRoot ?? false) ? 'org-card--head' : '' }}">
         @if($member->photo)
-            <img src="{{ asset('storage/' . $member->photo) }}" 
+            <img src="{{ route('secure.file', $member->photo) }}" 
                  alt="{{ $member->name ?? $member->position }}" 
                  class="org-card__photo">
         @else

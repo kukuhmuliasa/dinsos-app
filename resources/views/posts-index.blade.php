@@ -27,7 +27,7 @@
                 </div>
                 
                 @if($post->image)
-                    <img src="{{ asset('storage/' . $post->image) }}" 
+                    <img src="{{ route('secure.file', $post->image) }}" 
                          class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                          alt="{{ $post->title }}">
                 @else

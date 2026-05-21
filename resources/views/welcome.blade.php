@@ -345,9 +345,16 @@
             }, 300);
         });
 
+        // Sanitize text before inserting into HTML to prevent XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.appendChild(document.createTextNode(text));
+            return div.innerHTML;
+        }
+
         async function fetchSuggestions(query) {
             try {
-                const response = await fetch(`/search/suggestions?q=${query}`);
+                const response = await fetch(`/search/suggestions?q=${encodeURIComponent(query)}`);
                 if (!response.ok) throw new Error('Network response was not ok');
                 const data = await response.json();
                 renderResults(data);
@@ -366,13 +373,13 @@
                         : '<span class="bg-green-100 text-green-600 p-2 rounded-lg"><svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" /></svg></span>';
                     
                     html += `
-                        <a href="${item.url}" class="flex items-center px-6 py-4 hover:bg-slate-50 transition-colors cursor-pointer group border-b border-gray-50 last:border-0">
+                        <a href="${escapeHtml(item.url)}" class="flex items-center px-6 py-4 hover:bg-slate-50 transition-colors cursor-pointer group border-b border-gray-50 last:border-0">
                             <div class="mr-4 flex-shrink-0">
                                 ${icon}
                             </div>
                             <div>
-                                <h4 class="font-bold text-gray-800 group-hover:text-blue-700 transition-colors text-sm md:text-base">${item.title}</h4>
-                                <span class="text-xs text-gray-400 uppercase tracking-wider font-semibold">${item.type}</span>
+                                <h4 class="font-bold text-gray-800 group-hover:text-blue-700 transition-colors text-sm md:text-base">${escapeHtml(item.title)}</h4>
+                                <span class="text-xs text-gray-400 uppercase tracking-wider font-semibold">${escapeHtml(item.type)}</span>
                             </div>
                             <div class="ml-auto text-gray-300 group-hover:text-yellow-500 transition-colors">
                                 <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
@@ -383,7 +390,7 @@
             } else {
                 html = `
                     <div class="px-6 py-8 text-center">
-                        <p class="text-gray-500 text-sm font-medium">Tidak ditemukan hasil untuk "${searchInput.value}"</p>
+                        <p class="text-gray-500 text-sm font-medium">Tidak ditemukan hasil untuk "${escapeHtml(searchInput.value)}"</p>
                     </div>
                 `;
             }
@@ -492,7 +499,7 @@
                             {{ $post->created_at->format('d M Y') }}
                         </div>
                         @if($post->image)
-                            <img src="{{ asset('storage/' . $post->image) }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                            <img src="{{ route('secure.file', $post->image) }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                         @else
                             <div class="w-full h-full bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center text-gray-400 font-medium">No Image</div>
                         @endif

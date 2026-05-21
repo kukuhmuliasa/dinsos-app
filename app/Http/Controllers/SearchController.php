@@ -10,11 +10,11 @@ class SearchController extends Controller
 {
     public function suggestions(Request $request)
     {
-        $query = $request->input('q');
+        $validated = $request->validate([
+            'q' => 'required|string|max:100',
+        ]);
 
-        if (!$query) {
-            return response()->json([]);
-        }
+        $query = strip_tags($validated['q']);
 
         try {
             $services = Service::where('name', 'LIKE', "%{$query}%")
@@ -63,6 +63,10 @@ class SearchController extends Controller
 
     public function results(Request $request)
     {
+        $request->validate([
+            'q' => 'nullable|string|max:100',
+        ]);
+
         return redirect()->route('layanan.index');
     }
 }

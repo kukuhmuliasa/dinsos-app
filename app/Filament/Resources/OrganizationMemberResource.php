@@ -33,7 +33,10 @@ class OrganizationMemberResource extends Resource
                     Forms\Components\FileUpload::make('photo')
                         ->label('Foto Pejabat')
                         ->image()
-                        ->directory('organization')
+                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                        ->maxSize(2048) // 2MB
+                        ->disk('local')
+                        ->directory('uploads/organization')
                         ->imageResizeMode('cover')
                         ->imageCropAspectRatio('1:1')
                         ->imageResizeTargetWidth('400')

@@ -47,11 +47,11 @@
 
             {{-- Action Buttons --}}
             <div class="flex space-x-4 w-full md:w-auto">
-                <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank" 
+                <a href="{{ route('secure.file', $document->file_path) }}" target="_blank" 
                    class="flex-1 md:flex-none text-center px-8 py-3.5 border-2 border-blue-900 text-blue-900 font-black rounded-2xl hover:bg-blue-50 transition-all active:scale-95 text-sm uppercase tracking-wider">
                     Pratinjau
                 </a>
-                <a href="{{ asset('storage/' . $document->file_path) }}" download 
+                <a href="{{ route('secure.file', $document->file_path) }}" download 
                    class="flex-1 md:flex-none text-center px-8 py-3.5 bg-blue-900 text-white font-black rounded-2xl hover:bg-yellow-500 hover:text-blue-950 transition-all shadow-lg active:scale-95 text-sm uppercase tracking-wider">
                     Unduh
                 </a>

@@ -9,5 +9,11 @@ class Document extends Model
   protected $fillable = [
     'title',
     'category',
-    'file',];
+    'file',
+    'published_at',
+  ];
+
+  protected $casts = [
+    'published_at' => 'date',
+  ];
 }

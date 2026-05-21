@@ -30,12 +30,12 @@
                     
                     <div class="flex items-center text-gray-400 text-xs font-bold uppercase tracking-tighter mb-8">
                         <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                        Diterbitkan: {{ $doc->created_at->translatedFormat('d M Y') }}
+                        Diterbitkan: {{ ($doc->published_at ?? $doc->created_at)->translatedFormat('d M Y') }}
                     </div>
                 </div>
 
                 <div class="relative z-10">
-                    <a href="{{ asset('storage/' . $doc->file) }}" target="_blank" class="w-full inline-flex items-center justify-center px-6 py-4 bg-gray-900 text-white font-black rounded-2xl hover:bg-yellow-500 hover:text-gray-900 transition-all duration-300 group/btn shadow-lg">
+                    <a href="{{ route('secure.file', $doc->file) }}" target="_blank" class="w-full inline-flex items-center justify-center px-6 py-4 bg-gray-900 text-white font-black rounded-2xl hover:bg-yellow-500 hover:text-gray-900 transition-all duration-300 group/btn shadow-lg">
                         <span>LIHAT DOKUMEN</span>
                         <svg class="w-5 h-5 ml-2 transform group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                     </a>

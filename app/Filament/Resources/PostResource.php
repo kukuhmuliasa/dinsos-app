@@ -47,7 +47,10 @@ class PostResource extends Resource
 
             FileUpload::make('image')
                 ->image()
-                ->directory('posts'),
+                ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                ->maxSize(5120) // 5MB
+                ->disk('local')
+                ->directory('uploads/posts'),
 
             Select::make('status')
                 ->options([

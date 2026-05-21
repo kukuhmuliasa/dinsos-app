@@ -2,7 +2,7 @@
 
 @section('title', $service->name . ' - Dinas Sosial Kabupaten Semarang')
 @section('header_badge', $service->category->name ?? 'Layanan')
-@section('header_title') {!! $service->name !!} @endsection
+@section('header_title') {{ $service->name }} @endsection
 @section('header_description', $service->short_description ?? 'Informasi lengkap mengenai layanan ini.')
 
 @section('content')
@@ -74,7 +74,7 @@
                     prose-headings:font-black prose-headings:text-gray-800
                     prose-p:text-gray-600 prose-p:leading-relaxed prose-p:mb-4
                     prose-li:text-gray-600 prose-strong:text-gray-800">
-            {!! $service->description !!}
+            {!! strip_tags($service->description, '<p><br><ul><ol><li><strong><em><b><i><h2><h3><a><blockquote>') !!}
         </div>
     </div>
 </section>

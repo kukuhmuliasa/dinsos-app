@@ -18,7 +18,7 @@
        
         @if($post->image)
             <div class="relative h-[300px] md:h-[500px] w-full">
-                <img src="{{ asset('storage/' . $post->image) }}" class="w-full h-full object-cover" alt="{{ $post->title }}">
+                <img src="{{ route('secure.file', $post->image) }}" class="w-full h-full object-cover" alt="{{ $post->title }}">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
             </div>
         @endif
@@ -31,7 +31,7 @@
 
             {{-- Isi Konten Utama --}}
             <div class="article-content prose prose-lg prose-blue max-w-none rendered-content text-gray-700 leading-loose">
-                {!! $post->content !!}
+                {!! strip_tags($post->content, '<p><br><ul><ol><li><strong><em><b><i><h2><h3><h4><a><blockquote><img>') !!}
             </div>
 
             {{-- Bagian Share --}}

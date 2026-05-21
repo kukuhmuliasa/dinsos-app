@@ -12,6 +12,7 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput; 
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Columns\TextColumn;
 
 
@@ -43,8 +44,18 @@ class DocumentResource extends Resource
 
             FileUpload::make('file')
                 ->label('File Dokumen (PDF)')
-                ->directory('documents')
+                ->acceptedFileTypes(['application/pdf'])
+                ->maxSize(10240) // 10MB
+                ->disk('local')
+                ->directory('uploads/documents')
                 ->required(),
+
+            DatePicker::make('published_at')
+                ->label('Tanggal Terbit')
+                ->default(now())
+                ->required()
+                ->native(false)
+                ->displayFormat('d/m/Y'),
                     ]);
                 }
 
@@ -59,6 +70,10 @@ class DocumentResource extends Resource
                 TextColumn::make('category')
                     ->label('Kategori')
                     ->searchable()
+                    ->sortable(),
+                TextColumn::make('published_at')
+                    ->label('Tanggal Terbit')
+                    ->date('d M Y')
                     ->sortable(),
             ])
             ->filters([

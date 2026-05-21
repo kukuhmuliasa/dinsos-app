@@ -6,8 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DocumentController;
-
-Route::get('/ppid/dokumen', [DocumentController::class, 'index'])->name('documents.index');
+use App\Http\Controllers\SecureFileController;
 
 Route::get('/', [HomeController::class, 'index']);
 
@@ -33,3 +32,8 @@ Route::prefix('ppid')->group(function () {
     Route::get('/jumlah-pemohon', [DocumentController::class, 'pemohon'])->name('documents.pemohon');
     Route::get('/geospasial', [DocumentController::class, 'geospasial'])->name('documents.geospasial');
 });
+
+// Secure file serving — files stored in storage/app/ are served through this route
+Route::get('/file/{path}', [SecureFileController::class, 'serve'])
+    ->where('path', '.*')
+    ->name('secure.file');
