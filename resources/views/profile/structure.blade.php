@@ -228,46 +228,39 @@
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
-        .org-tree ul {
-            flex-direction: column;
-            align-items: center;
-            padding-top: 1.5rem;
-        }
 
-        .org-tree ul::before {
-            height: 1.5rem;
-        }
-
-        .org-tree li {
-            padding: 1.5rem 0 0;
-        }
-
-        .org-tree li::before,
-        .org-tree li::after {
-            width: 0;
-            height: 1.5rem;
-            border-top: none;
-            border-left: 2.5px solid #cbd5e1;
-            border-radius: 0 !important;
-        }
-
-        .org-tree li::before {
-            display: none;
-        }
-
-        .org-tree li::after {
-            left: 50%;
-        }
-
-        .org-tree li:first-child::after,
-        .org-tree li:last-child::after,
-        .org-tree li:only-child::after {
-            border-left: 2.5px solid #cbd5e1;
+        .org-tree {
+            zoom: 0.7;
         }
 
         .org-card {
-            min-width: 200px;
-            max-width: 260px;
+            min-width: 140px;
+            max-width: 160px;
+            padding: 1rem;
+        }
+
+        .org-card__photo,
+        .org-card__placeholder {
+            width: 60px;
+            height: 60px;
+        }
+
+        .org-card--head .org-card__photo,
+        .org-card--head .org-card__placeholder {
+            width: 70px;
+            height: 70px;
+        }
+
+        .org-card__position {
+            font-size: 0.65rem;
+        }
+
+        .org-card__name {
+            font-size: 0.75rem;
+        }
+
+        .org-card__nip {
+            font-size: 0.55rem;
         }
     }
 
@@ -304,6 +297,7 @@
 
     {{-- Org Chart --}}
     <div class="px-4 py-8 md:px-8 md:py-12 overflow-x-auto">
+    <div class="min-w-max">
         @if($members->count() > 0)
             <div class="org-tree">
                 <ul>
