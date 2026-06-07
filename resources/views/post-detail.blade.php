@@ -2,7 +2,7 @@
 
 @section('title', $post->title . ' - Dinas Sosial Kabupaten Semarang')
 
-{{-- Konfigurasi Header Khusus Detail Berita --}}
+
 @section('header_badge', 'Berita Terkini')
 @section('header_title')
     {{ $post->title }}
@@ -15,10 +15,10 @@
 <div class="max-w-4xl mx-auto px-4">
     <article class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden animate-fade-up">
         
-        {{-- Gambar Utama Berita --}}
+       
         @if($post->image)
             <div class="relative h-[300px] md:h-[500px] w-full">
-                <img src="{{ asset('storage/' . $post->image) }}" class="w-full h-full object-cover" alt="{{ $post->title }}">
+                <img src="{{ route('secure.file', $post->image) }}" class="w-full h-full object-cover" alt="{{ $post->title }}">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
             </div>
         @endif
@@ -31,7 +31,7 @@
 
             {{-- Isi Konten Utama --}}
             <div class="article-content prose prose-lg prose-blue max-w-none rendered-content text-gray-700 leading-loose">
-                {!! $post->content !!}
+                {!! strip_tags($post->content, '<p><br><ul><ol><li><strong><em><b><i><h2><h3><h4><a><blockquote><img>') !!}
             </div>
 
             {{-- Bagian Share --}}

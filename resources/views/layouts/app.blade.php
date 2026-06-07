@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="google-site-verification" content="97ytQMS4o9HPpIACrP4z59stnfCo7z6w90KwHqN5Jm4" />
     <title>@yield('title', 'Dinas Sosial Kabupaten Semarang')</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -42,12 +43,12 @@
                 </li>
 
                 <li class="relative group flex items-center">
-                    <button class="flex items-center px-4 h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
+                    <a href="{{ route('profile.visimisi') }}" class="flex items-center px-4 h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
                         Profil
                         <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
-                    </button>
+                    </a>
                     <div class="absolute left-0 top-full w-max min-w-full bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
                         <a href="{{ route('profile.visimisi') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Visi & Misi</a>
                         <a href="{{ route('profile.gambaran-umum') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Gambaran Umum Organisasi</a>
@@ -56,20 +57,28 @@
                 </li>
 
                 <li class="relative group flex items-center">
-                    <button class="flex items-center px-4 h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
+                    <a href="{{ route('layanan.index') }}" class="flex items-center px-4 h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
                         Layanan
                         <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
-                    </button>
-                    <div class="absolute left-0 top-full w-max min-w-full bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
-                        <div class="py-2">
-                            <a href="{{ route('layanan.pkh') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Bantuan PKH, BPNT & PBI-JK</a>
-                            <a href="{{ route('layanan.pip') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Rekomendasi PIP/KIP</a>
-                            <a href="{{ route('layanan.kks') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Rekomendasi KKS</a>
-                            <a href="{{ route('layanan.pajak') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Keringanan Pajak</a>
-                            <a href="{{ route('layanan.rehab') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all border-b border-white/5 font-semibold uppercase tracking-wider">Rehabilitasi Sosial</a>
-                            <a href="{{ route('layanan.jamsos') }}" class="block px-6 py-3.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all font-semibold uppercase tracking-wider">Jaminan Sosial</a>
+                    </a>
+                    <div class="absolute left-1/2 -translate-x-1/2 top-full w-[540px] bg-blue-950/95 backdrop-blur-md rounded-b-2xl shadow-2xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
+                        <div class="grid grid-cols-2 gap-0 divide-x divide-white/10">
+                            @foreach($navCategories as $cat)
+                            <div class="py-4">
+                                <p class="px-6 text-[10px] font-extrabold uppercase tracking-[0.2em] text-yellow-400 mb-2">{{ $cat->name }}</p>
+                                @foreach($cat->activeServices as $svc)
+                                <a href="{{ route('layanan.show', $svc->slug) }}" class="block px-6 py-2.5 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-all font-semibold uppercase tracking-wider">{{ $svc->name }}</a>
+                                @endforeach
+                            </div>
+                            @endforeach
+                        </div>
+                        <div class="border-t border-white/10 px-6 py-3 bg-blue-900/50">
+                            <a href="{{ route('layanan.simulator') }}" class="flex items-center gap-2 text-xs text-yellow-400 font-bold uppercase tracking-wider hover:text-yellow-300 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" /></svg>
+                                Cek Kelayakan Bantuan
+                            </a>
                         </div>
                     </div>
                 </li>
@@ -79,17 +88,84 @@
                 </li>
 
                 <li class="relative group flex items-center">
-                    <button class="flex items-center px-4 h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
+                    <a href="{{ route('documents.pengaduan') }}" class="flex items-center px-4 h-10 py-2 hover:text-yellow-400 transition-colors uppercase font-semibold outline-none focus:outline-none">
                         PPID
                         <svg class="w-4 h-4 ml-1 transform group-hover:rotate-180 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
-                    </button>
+                    </a>
                     <div class="absolute right-0 top-full w-max min-w-full bg-blue-950/95 backdrop-blur-md rounded-b-xl shadow-xl hidden group-hover:block z-50 border-t-2 border-yellow-400 overflow-hidden">
                         <a href="{{ route('documents.pengaduan') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Pengaduan Penyalahgunaan Wewenang</a>
                         <a href="{{ route('documents.laporan') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Laporan PPID</a>
                         <a href="{{ route('documents.pemohon') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Jumlah Pemohon Informasi</a>
                         <a href="{{ route('documents.geospasial') }}" class="block px-6 py-3 text-xs text-white whitespace-nowrap hover:bg-yellow-400 hover:text-blue-950 transition-colors">Geospasial</a>
+                    </div>
+                </li>
+            </ul>
+
+            {{-- Hamburger Button --}}
+            <button id="app-hamburger-btn" class="md:hidden flex items-center justify-center p-1 focus:outline-none" aria-label="Buka Menu" aria-expanded="false">
+                <span class="sr-only">Buka Menu</span>
+                {{-- Hamburger Icon --}}
+                <svg id="app-icon-open" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+                {{-- Close (X) Icon --}}
+                <svg id="app-icon-close" class="w-6 h-6 text-white hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        {{-- Mobile Menu Panel --}}
+        <div id="app-mobile-menu" class="md:hidden hidden bg-blue-950 border-t border-blue-800/50 overflow-y-auto max-h-[80vh]">
+            <ul class="px-4 py-4 space-y-1 font-semibold text-sm uppercase tracking-wider">
+                <li>
+                    <a href="/" class="block px-4 py-3 rounded-lg hover:bg-yellow-400 hover:text-blue-950 transition-colors">Beranda</a>
+                </li>
+                <li>
+                    <button class="app-acc-btn w-full flex justify-between items-center px-4 py-3 rounded-lg hover:bg-blue-900 transition-colors">
+                        <span class="uppercase">Profil</span>
+                        <svg class="app-acc-arrow w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="app-acc-content hidden pl-4 mt-1 space-y-1">
+                        <a href="{{ route('profile.visimisi') }}" class="block px-4 py-2.5 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">Visi &amp; Misi</a>
+                        <a href="{{ route('profile.structure') }}" class="block px-4 py-2.5 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">Struktur Organisasi</a>
+                    </div>
+                </li>
+                <li>
+                    <button class="app-acc-btn w-full flex justify-between items-center px-4 py-3 rounded-lg hover:bg-blue-900 transition-colors">
+                        <span class="uppercase">Layanan</span>
+                        <svg class="app-acc-arrow w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="app-acc-content hidden pl-4 mt-1 space-y-1">
+                        @foreach($navCategories as $cat)
+                            <p class="px-4 pt-3 pb-1 text-[10px] font-extrabold uppercase tracking-[0.2em] text-yellow-400">{{ $cat->name }}</p>
+                            @foreach($cat->activeServices as $svc)
+                            <a href="{{ route('layanan.show', $svc->slug) }}" class="block px-4 py-2 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">{{ $svc->name }}</a>
+                            @endforeach
+                        @endforeach
+                        <div class="border-t border-blue-800/50 mt-2 pt-2">
+                            <a href="{{ route('layanan.simulator') }}" class="flex items-center gap-2 px-4 py-2.5 rounded-lg text-yellow-400 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs font-bold">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>
+                                Cek Kelayakan Bantuan
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <a href="{{ route('posts.index') }}" class="block px-4 py-3 rounded-lg hover:bg-yellow-400 hover:text-blue-950 transition-colors">Berita</a>
+                </li>
+                <li>
+                    <button class="app-acc-btn w-full flex justify-between items-center px-4 py-3 rounded-lg hover:bg-blue-900 transition-colors">
+                        <span class="uppercase">PPID</span>
+                        <svg class="app-acc-arrow w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </button>
+                    <div class="app-acc-content hidden pl-4 mt-1 space-y-1">
+                        <a href="{{ route('documents.pengaduan') }}" class="block px-4 py-2.5 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">Pengaduan Penyalahgunaan Wewenang</a>
+                        <a href="{{ route('documents.laporan') }}" class="block px-4 py-2.5 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">Laporan PPID</a>
+                        <a href="{{ route('documents.pemohon') }}" class="block px-4 py-2.5 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">Jumlah Pemohon Informasi</a>
+                        <a href="{{ route('documents.geospasial') }}" class="block px-4 py-2.5 rounded-lg text-blue-200 hover:bg-yellow-400 hover:text-blue-950 transition-colors text-xs">Geospasial</a>
                     </div>
                 </li>
             </ul>
@@ -157,10 +233,10 @@
             <div class="md:pl-12">
                 <h3 class="text-lg font-bold text-white mb-6 relative inline-block after:absolute after:bottom-[-8px] after:left-0 after:w-12 after:h-1 after:bg-yellow-400 after:rounded-full">Akses Cepat</h3>
                 <ul class="space-y-4 text-sm text-blue-200">
-                    <li><a href="#" class="hover:text-yellow-400 transition flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg> Bantuan PKH</a></li>
-                    <li><a href="#" class="hover:text-yellow-400 transition flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg> Kartu Indonesia Sehat</a></li>
-                    <li><a href="#" class="hover:text-yellow-400 transition flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg> Santunan Kematian</a></li>
-                    <li><a href="#" class="hover:text-yellow-400 transition flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg> Cek Status DTKS</a></li>
+                    <li><a href="{{ route('layanan.show', 'pkh-bpnt-pbi') }}" class="hover:text-yellow-400 transition flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg> Bantuan PKH</a></li>
+                    <li><a href="{{ route('layanan.show', 'pkh-bpnt-pbi') }}" class="hover:text-yellow-400 transition flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg> Kartu Indonesia Sehat</a></li>
+                    <li><a href="{{ route('layanan.show', 'jaminan-sosial') }}" class="hover:text-yellow-400 transition flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg> Santunan Kematian</a></li>
+                    <li><a href="{{ route('layanan.show', 'slrt-gempita-sena') }}" class="hover:text-yellow-400 transition flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg> Cek Status DTKS</a></li>
                 </ul>
             </div>
 
@@ -189,9 +265,56 @@
     </footer>
 
     <script>
+        // Scroll navbar
         window.addEventListener('scroll', function() {
             const nav = document.getElementById('main-nav');
             window.scrollY > 50 ? nav.classList.add('bg-blue-950/95', 'backdrop-blur-md', 'shadow-xl', 'py-3') : nav.classList.remove('bg-blue-950/95', 'backdrop-blur-md', 'shadow-xl', 'py-3');
+        });
+
+        // Hamburger toggle
+        const appHamBtn = document.getElementById('app-hamburger-btn');
+        const appMobileMenu = document.getElementById('app-mobile-menu');
+        const appIconOpen = document.getElementById('app-icon-open');
+        const appIconClose = document.getElementById('app-icon-close');
+        let appMenuOpen = false;
+
+        appHamBtn.addEventListener('click', function() {
+            appMenuOpen = !appMenuOpen;
+            appMobileMenu.classList.toggle('hidden', !appMenuOpen);
+            appHamBtn.setAttribute('aria-expanded', appMenuOpen);
+            if (appMenuOpen) {
+                appIconOpen.classList.add('hidden');
+                appIconClose.classList.remove('hidden');
+            } else {
+                appIconOpen.classList.remove('hidden');
+                appIconClose.classList.add('hidden');
+            }
+        });
+
+        // Accordion sub-menu
+        document.querySelectorAll('.app-acc-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                const content = btn.nextElementSibling;
+                const arrow = btn.querySelector('.app-acc-arrow');
+                const isOpen = !content.classList.contains('hidden');
+                document.querySelectorAll('.app-acc-content').forEach(c => c.classList.add('hidden'));
+                document.querySelectorAll('.app-acc-arrow').forEach(a => a.style.transform = '');
+                if (!isOpen) {
+                    content.classList.remove('hidden');
+                    arrow.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Tutup saat klik di luar
+        document.addEventListener('click', function(e) {
+            if (appMenuOpen && !document.getElementById('main-nav').contains(e.target)) {
+                appMobileMenu.classList.add('hidden');
+                appIconOpen.classList.remove('hidden');
+                appIconClose.classList.add('hidden');
+                appMenuOpen = false;
+                appHamBtn.setAttribute('aria-expanded', 'false');
+            }
         });
     </script>
 </body>

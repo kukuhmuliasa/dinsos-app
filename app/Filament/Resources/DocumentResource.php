@@ -12,6 +12,9 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\TextInput; 
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Columns\TextColumn;
+
 
 class DocumentResource extends Resource
 {
@@ -20,19 +23,16 @@ class DocumentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-folder-arrow-down';
 
-   // app/Filament/Resources/DocumentResource.php
 
    public static function form(Form $form): Form
     {
     return $form
         ->schema([
-            // Input Judul Dokumen
             TextInput::make('title')
                 ->label('Judul Dokumen')
                 ->required()
                 ->maxLength(255),
 
-            // Input Pilih Kategori (Pastikan isinya sama dengan logika Controller)
             Select::make('category')
                 ->label('Kategori Dokumen')
                 ->options([
@@ -42,11 +42,20 @@ class DocumentResource extends Resource
                 ->required()
                 ->native(false),
 
-            // Input Unggah File
-            FileUpload::make('file') // Harus sama dengan database
+            FileUpload::make('file')
                 ->label('File Dokumen (PDF)')
-                ->directory('documents')
+                ->acceptedFileTypes(['application/pdf'])
+                ->maxSize(10240) // 10MB
+                ->disk('local')
+                ->directory('uploads/documents')
                 ->required(),
+
+            DatePicker::make('published_at')
+                ->label('Tanggal Terbit')
+                ->default(now())
+                ->required()
+                ->native(false)
+                ->displayFormat('d/m/Y'),
                     ]);
                 }
 
@@ -54,10 +63,20 @@ class DocumentResource extends Resource
     {
         return $table
             ->columns([
-                //
+                TextColumn::make('title')
+                    ->label('Judul Dokumen')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('category')
+                    ->label('Kategori')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('published_at')
+                    ->label('Tanggal Terbit')
+                    ->date('d M Y')
+                    ->sortable(),
             ])
             ->filters([
-                //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -72,7 +91,6 @@ class DocumentResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
         ];
     }
 

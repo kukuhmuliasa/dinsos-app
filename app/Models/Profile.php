@@ -10,8 +10,8 @@ class Profile extends Model
     protected $fillable = [
         'type',
         'title',
-        'visi',  // Tambahkan ini agar bisa tersimpan
-        'misi',  // Tambahkan ini agar bisa tersimpan
+        'visi',
+        'misi',
         'image',
         'content',
     ];

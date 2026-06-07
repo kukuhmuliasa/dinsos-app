@@ -14,7 +14,7 @@ class HomeController extends Controller
         $posts = Post::where('status', 'published')->latest()->take(3)->get();
         
         
-        $services = Service::where('is_active', true)->get();
+        $services = Service::where('is_active', true)->where('is_featured', true)->orderBy('sort_order')->get();
 
         return view('welcome', compact('posts', 'services'));
     }
@@ -36,7 +36,6 @@ class HomeController extends Controller
     }
     public function documents()
     {
-    // Mengambil semua dokumen, dikelompokkan berdasarkan kategori
     $documents = \App\Models\Document::latest()->get();
     
     return view('documents', compact('documents'));
